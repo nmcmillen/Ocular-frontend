@@ -1,9 +1,9 @@
 import React from "react";
-import { Navbar, Container, Nav } from 'react-bootstrap'
-import logo from './images/ocular-logo.png'
+import { Navbar, Container, Nav } from "react-bootstrap";
+import logo from "./images/ocular-logo.png";
 import LoginModal from "./LoginModal";
+import SearchForm from "./SearchForm";
 import SignupModal from "./SignupModal";
-
 
 export default function HomeNavbar() {
   return (
@@ -20,12 +20,17 @@ export default function HomeNavbar() {
             />{" "}
             Ocular
           </Navbar.Brand>
+          <SearchForm />
           <Nav className="d-flex">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               {/* MENU LINKS */}
-              <Nav.Link><LoginModal/></Nav.Link>
-              <Nav.Link><SignupModal/></Nav.Link>
+              <Nav.Link>
+                <LoginModal />
+              </Nav.Link>
+              <Nav.Link>
+                <SignupModal />
+              </Nav.Link>
             </Navbar.Collapse>
           </Nav>
         </Container>

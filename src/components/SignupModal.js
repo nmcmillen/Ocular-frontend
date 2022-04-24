@@ -27,15 +27,15 @@ export default function SignupModal() {
                 autoFocus
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
               <Form.Label>Full Name</Form.Label>
               <Form.Control type="text" placeholder="John Doe" autoFocus />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
               <Form.Label>Username</Form.Label>
               <Form.Control type="text" placeholder="Username" autoFocus />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
               <Form.Label>Password</Form.Label>
               <Form.Control type="password" placeholder="Password" autoFocus />
             </Form.Group>
@@ -45,7 +45,7 @@ export default function SignupModal() {
           <Button variant="" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button type="submit" variant="primary" onClick={handleClose}>
             Sign Up
           </Button>
         </Modal.Footer>
