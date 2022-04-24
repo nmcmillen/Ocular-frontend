@@ -13,7 +13,7 @@ export default function LoginModal() {
         Login
       </Button>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal centered show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Login to Ocular</Modal.Title>
         </Modal.Header>

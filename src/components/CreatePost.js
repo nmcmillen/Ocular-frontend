@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 
-export default function SignupModal() {
+export default function CreatePost() {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -10,34 +10,28 @@ export default function SignupModal() {
   return (
     <>
       <Button className="text-white" variant="" onClick={handleShow}>
-        Signup
+        Create Post
       </Button>
 
       <Modal centered show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Create an Account</Modal.Title>
+          <Modal.Title>Create Post</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Email address</Form.Label>
+              <Form.Label>Post Description</Form.Label>
               <Form.Control
-                type="email"
-                placeholder="name@example.com"
+                as="textarea"
+                rows={3}
+                placeholder=""
+                maxlength='255'
                 autoFocus
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-              <Form.Label>Full Name</Form.Label>
-              <Form.Control type="text" placeholder="John Doe" autoFocus />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
-              <Form.Label>Username</Form.Label>
-              <Form.Control type="text" placeholder="Username" autoFocus />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" autoFocus />
+              <Form.Label>Upload Images</Form.Label>
+              <Form.Control type="file" placeholder="" autoFocus />
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -46,7 +40,7 @@ export default function SignupModal() {
             Cancel
           </Button>
           <Button type="submit" variant="primary" onClick={handleClose}>
-            Sign Up
+            Create Post
           </Button>
         </Modal.Footer>
       </Modal>
