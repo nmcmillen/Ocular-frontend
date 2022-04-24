@@ -1,0 +1,17 @@
+#post {
+    max-width: 500px;
+    border-radius: 0 !important;
+}
+
+img {
+    border-radius: 0 !important;
+}
+
+.timestamp {
+    text-align: right;
+}
+
+.avatar {
+    height: 50px;
+    width: 50px;
+}
