@@ -9,8 +9,8 @@ export default function SignupModal() {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Signup Modal
+      <Button className="text-white" variant="" onClick={handleShow}>
+        Signup
       </Button>
 
       <Modal show={show} onHide={handleClose}>

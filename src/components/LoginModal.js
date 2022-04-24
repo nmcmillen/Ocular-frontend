@@ -11,8 +11,8 @@ export default function LoginModal() {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Login Modal
+      <Button className="text-white" variant="" onClick={handleShow}>
+        Login
       </Button>
 
       <Modal show={show} onHide={handleClose}>

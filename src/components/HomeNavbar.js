@@ -1,6 +1,8 @@
 import React from "react";
 import { Navbar, Container, Nav } from 'react-bootstrap'
 import logo from './images/ocular-logo.png'
+import LoginModal from "./LoginModal";
+import SignupModal from "./SignupModal";
 
 
 export default function HomeNavbar() {
@@ -22,8 +24,8 @@ export default function HomeNavbar() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               {/* MENU LINKS */}
-              <Nav.Link href="/">Login</Nav.Link>
-              <Nav.Link href="/">Signup</Nav.Link>
+              <Nav.Link><LoginModal/></Nav.Link>
+              <Nav.Link><SignupModal/></Nav.Link>
             </Navbar.Collapse>
           </Nav>
         </Container>
