@@ -9,10 +9,10 @@ export default function PostLayout() {
   return (
     <>
       <Card className="mx-auto mt-4" id="post">
-        <Row className="p-0 m-2">
-          <Col className="p-0" auto={4}>
+        <Row className="p-0 m-2 post-header">
+          <Col className="p-0" xs={7}>
             <Image
-              className="avatar"
+              className="avatar ml-1"
               roundedCircle
               src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
             />
@@ -20,9 +20,9 @@ export default function PostLayout() {
           </Col>
           <Col
             className="timestamp text-muted p-0"
-            auto={{ span: 4, offset: 4 }}
+            xs={{span: 4, offset: 1 }}
           >
-            <Card.Text>{Date.now()}</Card.Text>
+            <Card.Text>April 19</Card.Text>
           </Col>
         </Row>
         <Card.Img
