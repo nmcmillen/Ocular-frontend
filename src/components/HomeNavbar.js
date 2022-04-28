@@ -5,8 +5,14 @@ import logo from "./images/ocular-logo.png";
 import LoginModal from "./LoginModal";
 import SearchForm from "./SearchForm";
 import SignupModal from "./SignupModal";
+import { Link } from "react-router-dom";
+import { useGlobalState } from "../context/GlobalState";
+
+// Maybe need a Link Container bootstrap???
 
 export default function HomeNavbar() {
+  const [ state, dispatch ] = useGlobalState();
+  
   return (
     <div>
       <Navbar bg="dark" variant="dark" expand="md">

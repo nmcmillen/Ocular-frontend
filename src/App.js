@@ -1,13 +1,20 @@
-import logo from './logo.svg';
 import './App.css';
 import HomeNavbar from "./components/HomeNavbar";
 import PostLayout from './components/PostLayout';
+import { Outlet } from 'react-router-dom';
+import NavBar from './components/NavBar';
+import { GlobalProvider } from './context/GlobalState';
 
 function App() {
   return (
     <div>
-      <HomeNavbar />
-      <PostLayout />
+      <GlobalProvider>
+        <NavBar />
+        <Outlet />
+      </GlobalProvider>
+        {/* <HomeNavbar /> my custom navbar */}
+        {/* <PostLayout /> my post layout */}
+
     </div>
   );
 }

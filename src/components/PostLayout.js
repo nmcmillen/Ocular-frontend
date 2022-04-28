@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./PostLayout.css";
 import { Button, Card, Col, Image, Row } from "react-bootstrap";
 import { getData } from "../Data";
-import axios from "axios";
 
 export default function PostLayout() {
   const [ posts, setPosts ] = useState([]);
