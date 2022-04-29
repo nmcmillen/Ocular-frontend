@@ -19,16 +19,6 @@ export default function PostLayout() {
   //   console.log(posts[2].description)
   //   }
 
-  // let username = "username.user";
-  // let postdesc = "Some quick example text to build on the card title and make up the bulk of the card's content.";
-
-  // let created_on = posts.created_date
-
-  // const formatDate = (created_on) => {
-  //   const options = { year: "numeric", month: "long", day: "numeric" }
-  //   return new Date(created_on).toLocaleDateString(undefined, options)
-  // }
-
   return (
     <>
     <div>
