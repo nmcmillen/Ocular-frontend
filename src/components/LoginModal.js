@@ -44,13 +44,14 @@ export default function LoginModal() {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="username">
-              <Form.Label>Email address</Form.Label>
+              <Form.Label>Username</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="user.ocular"
-                // id="username" 
+                // id="username"
                 name="username"
                 onChange={(e) => setUsername(e.target.value)}
+                // onSubmit={handleLogin}
                 required
                 autoFocus
               />
@@ -63,6 +64,7 @@ export default function LoginModal() {
                 name="password"
                 minLength="8"
                 onChange={(e) => setPassword(e.target.value)}
+                // onSubmit={handleLogin}
                 required
                 autoFocus
               />
@@ -73,7 +75,9 @@ export default function LoginModal() {
           <Button variant="" onClick={handleClose}>
             Cancel
           </Button>
-          <Button type="submit" variant="primary" onClick={handleLogin}> {/*{[handleClose, handleLogin]}*/}
+          <Button type="submit" variant="primary" onClick={handleLogin}>
+            {" "}
+            {/*{[handleClose, handleLogin]}*/}
             Sign In
           </Button>
         </Modal.Footer>
