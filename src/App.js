@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import { GlobalProvider } from "./context/GlobalState";
 import HomeSignedIn from "./pages/HomeSignedIn";
 import HomePage from "./pages/HomePage";
+import Profile from "./components/user/Profile";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           {/* <Route path="/" element={<App />} /> */}
           <Route path='home' element={<HomePage />} />
           <Route path="feed" element={<HomeSignedIn />} />
+          <Route path='profile' element= {<Profile />} />
         </Routes>
       </BrowserRouter>
     </GlobalProvider>

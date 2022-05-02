@@ -40,9 +40,26 @@ export default function HomeNavbar() {
               >
                 Feed
               </Link>
-              <CreatePost />
-              <LoginModal />
-              <SignupModal />
+              {!state.currentUser && (
+                <>
+                  <LoginModal />
+                  <SignupModal />
+                </>
+              )}
+              {state.currentUser && (
+                <>
+                  <CreatePost />
+                  <Link
+                    to="/profile"
+                    style={{ color: "white", textDecoration: "none" }}
+                  >
+                    <p>Hello {state.currentUser.user_id}</p>
+                  </Link>
+                </>
+              )}
+              {/* <CreatePost /> */}
+              {/* <LoginModal />
+              <SignupModal /> */}
             </Navbar.Collapse>
           </Nav>
         </Container>

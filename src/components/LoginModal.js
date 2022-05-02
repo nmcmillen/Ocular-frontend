@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import AuthService from "././services/auth.service";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useGlobalState } from ".././context/GlobalState";
 import jwtDecode from "jwt-decode";
 
@@ -11,7 +11,7 @@ export default function LoginModal() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // let navigate = useNavigate();
+  let navigate = useNavigate();
 
   const [state, dispatch] = useGlobalState();
 
@@ -27,7 +27,8 @@ export default function LoginModal() {
         currentUserToken: resp.access,
         currentUser: data,
       });
-      // navigate("/profile");
+      // navigate("/profile"); josh OG link
+      navigate("/feed");
     });
   };
 
