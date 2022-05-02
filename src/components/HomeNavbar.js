@@ -17,7 +17,7 @@ export default function HomeNavbar() {
     <div>
       <Navbar bg="dark" variant="dark" expand="md">
         <Container>
-          <Link to="/home" style={{ textDecoration: "none" }}>
+          <Link to="/" style={{ textDecoration: "none" }}>
             <Navbar.Brand>
               <img
                 alt=""

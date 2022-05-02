@@ -11,6 +11,7 @@ import {
       this.login = this.login.bind(this);
     }
   
+    // josh pointed this out per Blair's example
     async login(username, password) {
       let resp = await request({
         url: LOGIN_ENDPOINT,

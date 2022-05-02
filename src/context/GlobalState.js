@@ -7,7 +7,10 @@ import React, {
   import jwtDecode from 'jwt-decode'
   
   let user = JSON.parse(localStorage.getItem('user'))
-  
+
+
+  // Check this to return the correct username instead of id
+  // JSON web token to return more data per josh
   const initialState = {
     currentUser: user ? jwtDecode(user.access) : null,
     currentUserToken: user ? user.access : null
