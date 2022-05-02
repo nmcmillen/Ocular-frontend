@@ -1,0 +1,16 @@
+.hero-image {
+    height: 95vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-image: url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80");
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-text {
+    color: white;
+    filter: drop-shadow(4px 0px 10px black);
+    text-align: center;
+}

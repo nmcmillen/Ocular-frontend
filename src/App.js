@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 // import NavBar from './components/NavBar';
 import { GlobalProvider } from "./context/GlobalState";
 import HomeSignedIn from "./pages/HomeSignedIn";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* <Route path="/" element={<App />} /> */}
-          <Route path="home" element={<HomeSignedIn />} />
+          <Route path='home' element={<HomePage />} />
+          <Route path="feed" element={<HomeSignedIn />} />
         </Routes>
       </BrowserRouter>
     </GlobalProvider>

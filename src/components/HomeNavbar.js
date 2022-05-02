@@ -11,30 +11,38 @@ import { useGlobalState } from "../context/GlobalState";
 // Maybe need a Link Container bootstrap???
 
 export default function HomeNavbar() {
-  const [ state, dispatch ] = useGlobalState();
-  
+  const [state, dispatch] = useGlobalState();
+
   return (
     <div>
       <Navbar bg="dark" variant="dark" expand="md">
         <Container>
-          <Navbar.Brand href="#home">
-            <img
-              alt=""
-              src={logo}
-              width="30"
-              height="30"
-              className="d-inline-block align-top"
-            />{" "}
-            Ocular
-          </Navbar.Brand>
+          <Link to="/home" style={{ textDecoration: "none" }}>
+            <Navbar.Brand>
+              <img
+                alt=""
+                src={logo}
+                width="30"
+                height="30"
+                className="d-inline-block align-top"
+              />{" "}
+              Ocular
+            </Navbar.Brand>
+          </Link>
           <SearchForm />
           <Nav className="d-flex">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               {/* MENU LINKS */}
-                <CreatePost />
-                <LoginModal />
-                <SignupModal />
+              <Link
+                to="/feed"
+                style={{ color: "white", textDecoration: "none" }}
+              >
+                Feed
+              </Link>
+              <CreatePost />
+              <LoginModal />
+              <SignupModal />
             </Navbar.Collapse>
           </Nav>
         </Container>
