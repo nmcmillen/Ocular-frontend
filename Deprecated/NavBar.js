@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useGlobalState } from "../context/GlobalState";
+import { useGlobalState } from "../src/context/GlobalState";
 
 // Maybe need a Link Container bootstrap???
 
