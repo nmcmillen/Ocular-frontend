@@ -16,6 +16,7 @@ export default function LoginModal() {
   let navigate = useNavigate();
 
   const [state, dispatch] = useGlobalState();
+  // const [person, setPerson] = useGlobalState();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -33,6 +34,8 @@ export default function LoginModal() {
         currentUser: data,
         person
       });
+      // set person to local storage so it saves there
+      localStorage.setItem('person',JSON.stringify(person))
       navigate("/feed");
     });
   };
