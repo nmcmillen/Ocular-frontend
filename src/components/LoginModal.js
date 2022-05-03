@@ -4,6 +4,8 @@ import AuthService from "././services/auth.service";
 import { useNavigate } from "react-router-dom";
 import { useGlobalState } from ".././context/GlobalState";
 import jwtDecode from "jwt-decode";
+// new to get user data
+import request from "./services/api.request"; 
 
 export default function LoginModal() {
   const [show, setShow] = useState(false);
@@ -21,16 +23,31 @@ export default function LoginModal() {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    AuthService.login(username, password).then(async (resp) => {
-      let data = jwtDecode(resp.access);
+    AuthService.login(username, password)
+      .then(async (resp) => {
+      let data = await jwtDecode(resp.access);
+      let person = await getPerson(data.user_id);
+
       await dispatch({
         currentUserToken: resp.access,
         currentUser: data,
+        person
       });
-      // navigate("/profile"); josh OG link
       navigate("/feed");
     });
   };
+
+  // new to get user data
+  const getPerson = async (user) => {
+    console.log('getperson function')
+    let options = {
+      url:`/api/users/${user}`,
+      method: 'GET',
+    }
+    let resp = await request(options)
+    console.log(resp)
+    return resp.data
+  }
 
   return (
     <>

@@ -12,8 +12,8 @@ import { useGlobalState } from "../context/GlobalState";
 
 export default function HomeNavbar() {
   const [state, dispatch] = useGlobalState();
-  let user = JSON.parse(localStorage.getItem('user'))
-  console.log(user)
+  // let user = JSON.parse(localStorage.getItem("user"));
+  // console.log(user);
 
   function logout() {
     localStorage.clear();
@@ -57,7 +57,7 @@ export default function HomeNavbar() {
               {state.currentUser && (
                 <>
                   <CreatePost />
-                  
+
                   <Link
                     onClick={logout}
                     to="/"
@@ -69,13 +69,10 @@ export default function HomeNavbar() {
                     to="/profile"
                     style={{ color: "white", textDecoration: "none" }}
                   >
-                    <p>Hello {state.currentUser.user_id}</p>
+                    <p>Hello {state.person.first_name}</p>
                   </Link>
                 </>
               )}
-              {/* <CreatePost /> */}
-              {/* <LoginModal />
-              <SignupModal /> */}
             </Navbar.Collapse>
           </Nav>
         </Container>

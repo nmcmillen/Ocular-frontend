@@ -13,7 +13,7 @@ import React, {
   // JSON web token to return more data per josh
   const initialState = {
     currentUser: user ? jwtDecode(user.access) : null,
-    currentUserToken: user ? user.access : null
+    person: {}
   }
   
   const GlobalStateContext = createContext(initialState);
