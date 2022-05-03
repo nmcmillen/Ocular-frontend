@@ -7,7 +7,6 @@ import { API_URL, REFRESH_ENDPOINT } from './auth.constants';
  */
 const client = axios.create({
   baseURL: API_URL,
-  headers: authHeader(),
 });
 
 client.interceptors.response.use(
@@ -68,21 +67,26 @@ client.interceptors.response.use(
 /**
  * Request Wrapper with default success/error actions
  */
-const request = async (options) => {
+const request = async (opts) => {
+  let options = {
+    ...opts,
+    headers: authHeader(),
+  }
+
   const onSuccess = (response) => {
     console.debug('Request Successful!', response);
     return response;
   }
 
   const onError = (error) => {
-    console.error('Request Failed:', error.config);
+    console.debug('Request Failed:', error.config);
 
     if (error.response) {
       // Request was made but server responded with something
       // other than 2xx
-      console.error('Status:', error.response.status);
-      console.error('Data:', error.response.data);
-      console.error('Headers:', error.response.headers);
+      console.debug('Status:', error.response.status);
+      console.debug('Data:', error.response.data);
+      console.debug('Headers:', error.response.headers);
 
     } else {
       // Something else happened while setting up the request
