@@ -7,6 +7,7 @@ import { GlobalProvider } from "./context/GlobalState";
 import HomeSignedIn from "./pages/HomeSignedIn";
 import HomePage from "./pages/HomePage";
 import Profile from "./components/user/Profile";
+import MyProfile from "./pages/MyProfile";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
           {/* <Route path="/" element={<App />} /> */}
           <Route path='/' element={<HomePage />} />
           <Route path="feed" element={<HomeSignedIn />} />
-          <Route path='profile' element= {<Profile />} />
+          <Route path='profile' element= {<MyProfile />} />
         </Routes>
       </BrowserRouter>
     </GlobalProvider>
