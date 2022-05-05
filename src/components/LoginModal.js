@@ -13,14 +13,14 @@ export default function LoginModal() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  let navigate = useNavigate();
-
   const [state, dispatch] = useGlobalState();
   // const [person, setPerson] = useGlobalState();
-
+  
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  
+  let navigate = useNavigate();
+  
   const handleLogin = (e) => {
     e.preventDefault();
 
