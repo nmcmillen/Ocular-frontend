@@ -49,6 +49,9 @@ export default function MyProfile() {
         </Row>
       </Container>
 
+      {/* https://www.freecodecamp.org/news/build-a-search-filter-using-react-and-react-hooks/
+      <Card.Group itemsPerRow={3} style={{ marginTop: 20 }}> */}
+
       {/* User's posts */}
       <div>
       {posts.map(post => 
