@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { useGlobalState } from "../context/GlobalState";
 import axios from "axios";
+import request from "./services/api.request";
 // import Userfront from '@userfront/react';
 
 export default function CreatePost() {
@@ -20,7 +21,7 @@ export default function CreatePost() {
 
   // able to check 'post' state in the console. working when adding post info 5/4 at 9pm
   console.log(post);
-  console.log(JSON.stringify(post))
+  // console.log(JSON.stringify(post))
   // console.log('create post user test', state.currentUser.user_id)
 
   const handleChange = (key, value) => {
@@ -60,30 +61,38 @@ export default function CreatePost() {
   // console.log(Userfront.accessToken())
   // console.log('get user token', JSON.parse(localStorage.getItem('user'))['access_token'])
 
-  let token =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjUxNzY0MzU4LCJpYXQiOjE2NTE3NjA3NTgsImp0aSI6IjEzMDU4MjQ1ZGVjMTRmOTQ5NjdhNjc1NDY3ZDBkMWE3IiwidXNlcl9pZCI6Mn0.QyX-fwRjuP9PLvHOJEpDmt0GYtgmwzcWG3glb9oDLdg";
-
+  
   // ##THIS SENDS DATA BUT GETS 401 ERROR ##
-  const handleCreatePost = () => {
-    fetch(
-      "https://8000-nmcmillen-ocularbackend-sm1tv8tjiev.ws-us44.gitpod.io/api/posts/",
-      {
-        method: "POST",
-        body: JSON.stringify(post), //tried to stringify 'post' info but still doesn't work 
-        headers: {
-          "Content-Type": "application/json", //without this in it gets a 415 error related to media/content type
-          // 'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
-      .then((response) => response.json)
-      .then((result) => {
-        console.log("Success:", result);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+  const handleCreatePost = async () => {
+    let resp = await request({
+      url: 'api/posts/',
+      method: 'POST',
+      data: post
+    })
+    console.log(resp)
+    
+    // let token =
+    //   "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjUxNzY0MzU4LCJpYXQiOjE2NTE3NjA3NTgsImp0aSI6IjEzMDU4MjQ1ZGVjMTRmOTQ5NjdhNjc1NDY3ZDBkMWE3IiwidXNlcl9pZCI6Mn0.QyX-fwRjuP9PLvHOJEpDmt0GYtgmwzcWG3glb9oDLdg";
+
+    // fetch(
+    //   "https://8000-nmcmillen-ocularbackend-sm1tv8tjiev.ws-us44.gitpod.io/api/posts/",
+    //   {
+    //     method: "POST",
+    //     body: post, //tried to stringify 'post' info but still doesn't work 
+    //     headers: {
+    //       "Content-Type": "application/json", //without this in it gets a 415 error related to media/content type
+    //       // 'Content-Type': 'multipart/form-data',
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   }
+    // )
+    //   .then((response) => response.json)
+    //   .then((result) => {
+    //     console.log("Success:", result);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error:", error);
+    //   });
   };
 
   return (

@@ -16,6 +16,8 @@ export default function MyProfile() {
     })
   }, [])
 
+  
+
   return (
     <>
       <HomeNavbar />
