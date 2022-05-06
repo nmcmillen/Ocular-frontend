@@ -10,16 +10,7 @@ export default function CreatePost() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
   const [state, dispatch] = useGlobalState();
-
-  // set the post state to empty information with current user
-  // const [post, setPost] = useState({
-  //   created_by: state.currentUser.user_id,
-  //   description: "",
-  //   image: "",
-  // });
-  // const [image, setImage] = useState()
   const [post, setPost] = useState({
     created_by: state.currentUser.user_id,
     description: "",
@@ -28,9 +19,6 @@ export default function CreatePost() {
 
   // able to check 'post' state in the console. working when adding post info 5/4 at 9pm
   console.log('what is post', post);
-  // console.log(image);
-  // console.log(JSON.stringify(post))
-  // console.log('create post user test', state.currentUser.user_id)
 
   const handleChange = (key, value) => {
     setPost({
@@ -38,13 +26,6 @@ export default function CreatePost() {
       [key]: value,
     });
   };
-
-  // const handleImage = (key, value) => {
-  //   setImage({
-  //     ...image,
-  //     [key]: value,
-  //   });
-  // };
 
   // const handleCreatePost = async (e) => {
   //   e.preventDefault();
@@ -101,29 +82,29 @@ export default function CreatePost() {
 
   const user = JSON.parse(localStorage.getItem('user'))
 
-  // let token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjUxNzk4NzQ0LCJpYXQiOjE2NTE3OTUxNDQsImp0aSI6ImVhYzlkZTJiYmUwMzQ4OTRiMjUxOGIwZGE4MzgzNzUxIiwidXNlcl9pZCI6Mn0.fh63kHoIg7K8Fwqpeymp5tuDZHOmQ8i5jv5WklQWLbY'
-
-  // ###THIS WORKS WHAT THE HECK?!?!###
-  // When getting post the description is in brackets and quotes ['for example']
-  let handleCreatePost = (e)  => {
-    e.preventDefault()
+  // ### AXIOS CALL TO CREATE FORM DATA AND SEND TO BACKEND. WORKING. ###
+  let handleCreatePost = async (e) => {
+    e.preventDefault();
     const newPost = new FormData();
     newPost.append("created_by", post.created_by);
     newPost.append("description", post.description);
-    newPost.append("image", post.image, post.image.name);
-    fetch('https://8000-nmcmillen-ocularbackend-sm1tv8tjiev.ws-us44.gitpod.io/api/posts/', { 
-      method: 'post',
-      body: newPost,
-      headers: {
-          // 'Content-Type': 'multipart/form-data',
-          'Authorization': 'Bearer ' + user.access
-          // 'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(res => {
+    newPost.append("image", post.image);
+    await axios
+      .post(
+        "https://8000-nmcmillen-ocularbackend-sm1tv8tjiev.ws-us44.gitpod.io/api/posts/",
+        newPost,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: "Bearer " + user.access,
+            // 'Authorization': `Bearer ${token}`
+          },
+        }
+      )
+      .then((res) => {
         console.log(res);
       });
-  }
+  };
 
   return (
     <>
@@ -173,63 +154,3 @@ export default function CreatePost() {
     </>
   );
 }
-
-
-
-    // let token =
-    //   "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjUxNzY0MzU4LCJpYXQiOjE2NTE3NjA3NTgsImp0aSI6IjEzMDU4MjQ1ZGVjMTRmOTQ5NjdhNjc1NDY3ZDBkMWE3IiwidXNlcl9pZCI6Mn0.QyX-fwRjuP9PLvHOJEpDmt0GYtgmwzcWG3glb9oDLdg";
-
-    // fetch(
-    //   "https://8000-nmcmillen-ocularbackend-sm1tv8tjiev.ws-us44.gitpod.io/api/posts/",
-    //   {
-    //     method: "POST",
-    //     body: post, //tried to stringify 'post' info but still doesn't work 
-    //     headers: {
-    //       "Content-Type": "application/json", //without this in it gets a 415 error related to media/content type
-    //       // 'Content-Type': 'multipart/form-data',
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   }
-    // )
-    //   .then((response) => response.json)
-    //   .then((result) => {
-    //     console.log("Success:", result);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error:", error);
-    //   });
-
-
-
-
-
-
-  // create the function to set the post
-  // const handleCreatePost = async (e) => {
-  //   // e.preventDefault();
-  //   console.log('create post button pushed')
-  //   // do I need to add a post method in authservice???
-  //   let options = {
-  //     url: '/api/posts/',
-  //     method: 'POST'
-
-  //   }
-  // }
-
-  // const handleCreatePost = () => {
-  //   axios({
-  //     method: "POST",
-  //     url: "https://8000-nmcmillen-ocularbackend-sm1tv8tjiev.ws-us44.gitpod.io/api/posts/",
-  //     headers: {
-
-  //       Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjUxNzU3Mjg2LCJpYXQiOjE2NTE3NTM2ODYsImp0aSI6IjE0ZTczZTU5YTJmMzRlZDM4ZWNkOTFkOWUwNjY0NTE1IiwidXNlcl9pZCI6Mn0.QqNj_tGQsq4t2eu64LIpyZOM9I0SfcWRCVP665qBGeg"
-  //     },
-  //     post
-  //   })
-  //     .then((res) => console.log(res))
-  //     .catch((err) => console.log(err));
-  // };
-
-  // console.log(state.currentUser.access)
-  // console.log(Userfront.accessToken())
-  // console.log('get user token', JSON.parse(localStorage.getItem('user'))['access_token'])
