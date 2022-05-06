@@ -41,3 +41,31 @@
         console.log(res);
       });
   }
+
+
+  // const user = JSON.parse(localStorage.getItem('user'))
+
+  // ### AXIOS CALL TO CREATE FORM DATA AND SEND TO BACKEND. WORKING. ###
+  // let handleCreatePost = async (e) => {
+  //   e.preventDefault();
+  //   const newPost = new FormData();
+  //   newPost.append("created_by", post.created_by);
+  //   newPost.append("description", post.description);
+  //   newPost.append("image", post.image);
+  //   await axios
+  //     .post(
+  //       "https://8000-nmcmillen-ocularbackend-sm1tv8tjiev.ws-us44.gitpod.io/api/posts/",
+  //       newPost,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //           Authorization: "Bearer " + user.access,
+  //           // 'Authorization': `Bearer ${token}`
+  //         },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       console.log(res);
+  //     });
+  //   window.location.reload(false);
+  // };
