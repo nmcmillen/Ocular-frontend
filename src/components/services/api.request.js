@@ -67,39 +67,41 @@ client.interceptors.response.use(
 /**
  * Request Wrapper with default success/error actions
  */
+// edited Josh's original code for Creat Post to use spread operator to join
+// opts.headers, and authHeader for the corrected headers
 const request = async (opts) => {
   let options = {
     ...opts,
-    headers: authHeader(),
-  }
+    headers: {
+      ...opts.headers,
+      ...authHeader(),
+    },
+  };
 
   const onSuccess = (response) => {
-    console.debug('Request Successful!', response);
+    console.debug("Request Successful!", response);
     return response;
-  }
+  };
 
   const onError = (error) => {
-    console.debug('Request Failed:', error.config);
+    console.debug("Request Failed:", error.config);
 
     if (error.response) {
       // Request was made but server responded with something
       // other than 2xx
-      console.debug('Status:', error.response.status);
-      console.debug('Data:', error.response.data);
-      console.debug('Headers:', error.response.headers);
-
+      console.debug("Status:", error.response.status);
+      console.debug("Data:", error.response.data);
+      console.debug("Headers:", error.response.headers);
     } else {
       // Something else happened while setting up the request
       // triggered the error
-      console.error('Error Message:', error.message);
+      console.error("Error Message:", error.message);
     }
 
     return Promise.reject(error.response || error.message);
-  }
+  };
 
-  return await client(options)
-    .then(onSuccess)
-    .catch(onError);
-}
+  return await client(options).then(onSuccess).catch(onError);
+};
 
 export default request;
