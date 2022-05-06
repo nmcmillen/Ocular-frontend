@@ -37,7 +37,7 @@ export default function CreatePost() {
       url: "api/posts/",
       method: "POST",
       data: newPost,
-      headers: { "Content-Type": "multipart/form-data" },
+      // headers: { "Content-Type": "multipart/form-data" },
     }).then((resp) => {
       console.log(resp);
     });
