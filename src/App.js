@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
+// import HomeNavbar from "./components/HomeNavbar";
+// import PostLayout from './components/PostLayout';
+// import NavBar from './components/NavBar';
+import { GlobalProvider } from "./context/GlobalState";
+import HomeSignedIn from "./pages/HomeSignedIn";
+import HomePage from "./pages/HomePage";
+import Profile from "./components/user/Profile";
+import MyProfile from "./pages/MyProfile";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <GlobalProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* <Route path="/" element={<App />} /> */}
+          <Route path='/' element={<HomePage />} />
+          <Route path="feed" element={<HomeSignedIn />} />
+          <Route path='profile' element= {<MyProfile />} />
+        </Routes>
+      </BrowserRouter>
+    </GlobalProvider>
   );
 }
 
 export default App;
+
+
+// <HomeNavbar />
+// <PostLayout />
+// <NavBar />
+// <Outlet />
