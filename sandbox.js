@@ -1,3 +1,59 @@
+
+// GAVE A 200 ACCEPTED STATUS BUT DIDN'T CREATE A POST. NOTHING IN BODY
+let handleCreatePost = (e)  => {
+  e.preventDefault()
+  const newPost = new FormData();
+  newPost.append("created_by", post.created_by);
+  newPost.append("description", post.description);
+  newPost.append("image", post.image);
+  fetch('https://8000-nmcmillen-ocularbackend-sm1tv8tjiev.ws-us44.gitpod.io/api/posts/', newPost, { 
+    method: 'POST',
+    headers: {
+        // 'Content-Type': 'multipart/form-data',
+        'Authorization': 'Bearer ' + user.access
+        // 'Authorization': `Bearer ${token}`
+    }
+  })
+    .then(res => {
+      console.log(res);
+    });
+}
+
+
+// FORM DATA SEEMS TO WORK BUT STILL GETTING ERRORS
+let handleCreatePost = (e)  => {
+  e.preventDefault()
+  const newPost = new FormData();
+  newPost.append("created_by", post.created_by);
+  newPost.append("description", post.description);
+  newPost.append("image", post.image);
+  await axios.post('https://8000-nmcmillen-ocularbackend-sm1tv8tjiev.ws-us44.gitpod.io/api/posts/', newPost, {  
+  headers: {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': 'Bearer ' + user.access
+      // 'Authorization': `Bearer ${token}`
+   }
+  })
+    .then(res => {
+      console.log(res);
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ***FULLY FUNCTIONAL POST CARD DO NOT CHANGE ***
 <>
 <Card className="mx-auto mt-4" id="post">
