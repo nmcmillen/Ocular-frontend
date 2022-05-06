@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { useGlobalState } from "../context/GlobalState";
 import axios from "axios";
-import request from "./services/api.request";
+// import request from "./services/api.request";
+// import authHeader from '../auth.headers'
 // import Userfront from '@userfront/react';
 
 export default function CreatePost() {
@@ -22,11 +23,11 @@ export default function CreatePost() {
   const [post, setPost] = useState({
     created_by: state.currentUser.user_id,
     description: "",
-    image: ""
+    image: null
   });
 
   // able to check 'post' state in the console. working when adding post info 5/4 at 9pm
-  console.log(post);
+  console.log('what is post', post);
   // console.log(image);
   // console.log(JSON.stringify(post))
   // console.log('create post user test', state.currentUser.user_id)
@@ -50,7 +51,7 @@ export default function CreatePost() {
   //   let newPost = new FormData();
   //   newPost.append("created_by", post.created_by);
   //   newPost.append("description", post.description);
-  //   // newPost.append("image", post.image);
+  //   newPost.append("image", post.image);
   //   let resp = await request({
   //     url: "api/posts/",
   //     method: "POST",
@@ -61,43 +62,68 @@ export default function CreatePost() {
   //   console.log(resp)
   // };
 
-  const handleCreatePost = async () => {
-    console.log('test', post, image)
-    let newPost = new FormData();
-    newPost.append("created_by", post.created_by);
-    newPost.append("description", post.description);
-    newPost.append("image", post.image);
-    // newPost.append("image", image); working
+  // const handleCreatePost = async (e) => {
+  //   e.preventDefault();
+  //   console.log('create post 1', post)
+  //   let newPost = new FormData();
+  //   newPost.append("created_by", post.created_by);
+  //   newPost.append("description", post.description);
+  //   newPost.append("image", post.image);
+  //   // newPost.append("image", image); working
 
-    console.log("posty", newPost)
+  //   console.log("posty", newPost)
 
-    let res = await request({
-      url: 'api/posts/',
-      method: 'POST',
-      body: newPost,
-      headers: { 'Content-Type': 'multipart/form-data' }
-    })
-    console.log("post again", newPost)
-    // fetch('https://8000-nmcmillen-ocularbackend-sm1tv8tjiev.ws-us44.gitpod.io/api/posts/', {
-    //   method: 'POST',
-    //   body: newPost
-    // })
-    console.log('test res', res)
-    .then( res => console.log(res))
-    .catch( error => console.log(error))
-  }
-
-
+  //   let res = await request({
+  //     url: 'api/posts/',
+  //     method: 'POST',
+  //     body: newPost,
+  //     headers: { 'Content-Type': 'multipart/form-data' }
+  //   })
+  //   console.log("post again", newPost)
+  //   // fetch('https://8000-nmcmillen-ocularbackend-sm1tv8tjiev.ws-us44.gitpod.io/api/posts/', {
+  //   //   method: 'POST',
+  //   //   body: newPost
+  //   // })
+  //   console.log('test res', res)
+  //   .then( res => console.log(res))
+  //   .catch( error => console.log(error))
+  // }
   
   // ##THIS SENDS DATA BUT GETS 401 ERROR ##
   // const handleCreatePost = async () => {
   //   let resp = await request({
   //     url: 'api/posts/',
   //     method: 'POST',
-  //     data: post, image
+  //     data: post
   //   })
   //   console.log(resp)
   // };
+
+  const user = JSON.parse(localStorage.getItem('user'))
+
+  // let token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjUxNzk4NzQ0LCJpYXQiOjE2NTE3OTUxNDQsImp0aSI6ImVhYzlkZTJiYmUwMzQ4OTRiMjUxOGIwZGE4MzgzNzUxIiwidXNlcl9pZCI6Mn0.fh63kHoIg7K8Fwqpeymp5tuDZHOmQ8i5jv5WklQWLbY'
+
+  // ###THIS WORKS WHAT THE HECK?!?!###
+  // When getting post the description is in brackets and quotes ['for example']
+  let handleCreatePost = (e)  => {
+    e.preventDefault()
+    const newPost = new FormData();
+    newPost.append("created_by", post.created_by);
+    newPost.append("description", post.description);
+    newPost.append("image", post.image, post.image.name);
+    fetch('https://8000-nmcmillen-ocularbackend-sm1tv8tjiev.ws-us44.gitpod.io/api/posts/', { 
+      method: 'post',
+      body: newPost,
+      headers: {
+          // 'Content-Type': 'multipart/form-data',
+          'Authorization': 'Bearer ' + user.access
+          // 'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(res => {
+        console.log(res);
+      });
+  }
 
   return (
     <>

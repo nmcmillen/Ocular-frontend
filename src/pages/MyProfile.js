@@ -16,10 +16,10 @@ export default function MyProfile() {
   }, []);
 
   let userPosts = posts.filter(
-    (displayPosts) => displayPosts.created_by.id == state.currentUser.user_id
+    (displayPosts) => displayPosts.created_by.id === state.currentUser.user_id
   );
 
-  console.log("show user posts", userPosts);
+  // console.log("show user posts", userPosts);
 
   return (
     <>
