@@ -1,0 +1,9 @@
+.profile-page {
+    max-width: 500px;
+    min-width: 350px;
+}
+
+.profile-avatar {
+    height: 200px;
+    width: 200px;
+}

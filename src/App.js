@@ -8,6 +8,7 @@ import HomeSignedIn from "./pages/HomeSignedIn";
 import HomePage from "./pages/HomePage";
 // import Profile from "./components/user/Profile";
 import MyProfile from "./pages/MyProfile";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
           <Route path='/' element={<HomePage />} />
           <Route path="feed" element={<HomeSignedIn />} />
           <Route path='profile' element= {<MyProfile />} />
+          {/* <Route path='userprofile' element= {<UserProfile />} /> */}
+          <Route path='userprofile/:username' element= {<UserProfile />} />
         </Routes>
       </BrowserRouter>
     </GlobalProvider>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
 import "./PostLayout.css";
 import { Button, Card, Col, Image, Row } from "react-bootstrap";
 import { getData } from "../Data";
@@ -31,7 +32,9 @@ export default function PostLayout() {
               roundedCircle
               src={post.created_by.avatar}
             />
+            <Link to={`/userprofile/${post.created_by.username}`}>
             <strong>{post.created_by.username}</strong>
+            </Link>
           </Col>
           <Col
             className="timestamp text-muted p-0"
