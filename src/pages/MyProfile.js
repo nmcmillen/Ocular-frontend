@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import HomeNavbar from "../components/HomeNavbar";
 import { useGlobalState } from "../context/GlobalState";
-import { Card, Col, Container, Image, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
 import { getData } from "../Data";
 import "./MyProfile.css";
 
@@ -19,6 +19,24 @@ export default function MyProfile() {
     (displayPosts) => displayPosts.created_by.id === state.currentUser.user_id
   );
 
+// ### WORKING ON HOW TO EDIT USER DATA HERE ###
+  const [profile, setProfile] = useState({
+    firstName: state.person.first_name,
+    lastName: state.person.last_name,
+    bio: state.person.bio,
+  });
+
+  // able to check 'post' state in the console. working when adding post info 5/4 at 9pm
+  console.log("current user", profile);
+
+  // handles the updates to create post modal from the text form and image/file upload
+  const handleChange = (key, value) => {
+    setProfile({
+      ...profile,
+      [key]: value,
+    });
+  };
+
   // console.log("show user posts", userPosts);
 
   return (
@@ -30,6 +48,12 @@ export default function MyProfile() {
           roundedCircle
           src={state.person.avatar}
         />
+        <Row>
+          <Col>
+            <Button>Edit Profile</Button>
+            <Button>Edit Avatar</Button>
+          </Col>
+        </Row>
         <Row>
           <h3>
             {state.person.first_name} {state.person.last_name}
@@ -59,7 +83,7 @@ export default function MyProfile() {
 
       {/* User's posts */}
       <div>
-      {/* <Row xs={1} md={2} className="g-4"> */}
+        {/* <Row xs={1} md={2} className="g-4"> */}
         {userPosts.map((post) => (
           <Card className="mx-auto mt-4" id="post">
             <Row className="p-0 m-2 post-header">
