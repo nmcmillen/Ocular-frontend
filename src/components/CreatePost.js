@@ -46,7 +46,7 @@ export default function CreatePost() {
 
   return (
     <>
-      <Button className="text-white" variant="" onClick={handleShow}>
+      <Button className="text-white shadow-none" variant="" onClick={handleShow}>
         Create Post
       </Button>
 

@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from "react";
 import HomeNavbar from "../components/HomeNavbar";
 import { useGlobalState } from "../context/GlobalState";
-import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
+import {
+  Button,
+  ButtonGroup,
+  Card,
+  Col,
+  Container,
+  Dropdown,
+  DropdownButton,
+  Image,
+  Row,
+} from "react-bootstrap";
 import { getData } from "../Data";
 import "./MyProfile.css";
+import request from "../components/services/api.request";
 
 export default function MyProfile() {
   const [state, dispatch] = useGlobalState();
@@ -19,25 +30,31 @@ export default function MyProfile() {
     (displayPosts) => displayPosts.created_by.id === state.currentUser.user_id
   );
 
-// ### WORKING ON HOW TO EDIT USER DATA HERE ###
-  const [profile, setProfile] = useState({
-    firstName: state.person.first_name,
-    lastName: state.person.last_name,
-    bio: state.person.bio,
-  });
+  // ### WORKING ON HOW TO EDIT USER DATA HERE ###
+  // const [profile, setProfile] = useState({
+  //   firstName: state.person.first_name,
+  //   lastName: state.person.last_name,
+  //   bio: state.person.bio,
+  // });
+  // console.log("current user", profile);
 
-  // able to check 'post' state in the console. working when adding post info 5/4 at 9pm
-  console.log("current user", profile);
+  // const handleChange = (key, value) => {
+  //   setProfile({
+  //     ...profile,
+  //     [key]: value,
+  //   });
+  // };
 
-  // handles the updates to create post modal from the text form and image/file upload
-  const handleChange = (key, value) => {
-    setProfile({
-      ...profile,
-      [key]: value,
+  let handleDeletePost = async (id) => {
+    console.log('define clicked post', id)
+    let resp = await request({
+      url: `api/posts/${id}`,
+      method: "DELETE",
+    }).then((resp) => {
+      console.log(resp);
     });
+    window.location.reload(false);
   };
-
-  // console.log("show user posts", userPosts);
 
   return (
     <>
@@ -108,9 +125,26 @@ export default function MyProfile() {
               // src="https://images.unsplash.com/photo-1533418264835-9871c7c2dbf0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cmFjZWNhcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
             />
             <Card.Body className="p-0 m-2">
-              <Card.Text className="m-0">
-                {post.number_of_likes} likes
-              </Card.Text>
+              <Row className ="align-items-center">
+                <Col>
+                  {" "}
+                  <Card.Text className="m-0">
+                    {post.number_of_likes} likes
+                  </Card.Text>
+                </Col>
+                <Col className="d-flex justify-content-end">
+                  <DropdownButton
+                    // className="shadow-none"
+                    id="dropdown-basic-button"
+                    size="sm"
+                    variant="secondary"
+                    title=""
+                  >
+                    <Dropdown.Item onClick={()=>handleDeletePost(post.id)}>Delete Post {post.id}</Dropdown.Item>
+                  </DropdownButton>
+                </Col>
+              </Row>
+
               <Card.Text>
                 <strong>{post.created_by.username}</strong> {post.description}
               </Card.Text>
