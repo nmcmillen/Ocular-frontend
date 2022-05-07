@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import { GlobalProvider } from "./context/GlobalState";
 import HomeSignedIn from "./pages/HomeSignedIn";
 import HomePage from "./pages/HomePage";
-import Profile from "./components/user/Profile";
+// import Profile from "./components/user/Profile";
 import MyProfile from "./pages/MyProfile";
 
 function App() {
