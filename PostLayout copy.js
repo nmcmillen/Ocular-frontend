@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./PostLayout.css";
 import { Button, Card, Col, Image, Row } from "react-bootstrap";
-import { getData } from "./src/Data";
+import { getPostData } from "./src/Data";
 
 export default function PostLayout() {
   const [ posts, setPosts ] = useState([]);
 
   useEffect (() => {
-    getData()
+    getPostData()
     .then((data) => {
       setPosts(data)
       console.log('postlayout.js', data)
