@@ -104,7 +104,7 @@ export default function SignupModal() {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="passConf">
-              <Form.Label>Password</Form.Label>
+              <Form.Label>Confirm Password</Form.Label>
               <Form.Control
                 type="password"
                 name="password"

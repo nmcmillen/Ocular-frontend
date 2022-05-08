@@ -12,7 +12,7 @@ import {
   Image,
   Row,
 } from "react-bootstrap";
-import { getData } from "../Data";
+import { getPostData } from "../Data";
 import "./MyProfile.css";
 import request from "../components/services/api.request";
 
@@ -21,7 +21,7 @@ export default function MyProfile() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    getData().then((data) => {
+    getPostData().then((data) => {
       setPosts(data);
     });
   }, []);
@@ -46,7 +46,7 @@ export default function MyProfile() {
   // };
 
   let handleDeletePost = async (id) => {
-    console.log('define clicked post', id)
+    console.log("define clicked post", id);
     let resp = await request({
       url: `api/posts/${id}`,
       method: "DELETE",
@@ -122,10 +122,9 @@ export default function MyProfile() {
             <Card.Img
               variant="top"
               src={post.photos[0].images}
-              // src="https://images.unsplash.com/photo-1533418264835-9871c7c2dbf0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cmFjZWNhcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
             />
             <Card.Body className="p-0 m-2">
-              <Row className ="align-items-center">
+              <Row className="align-items-center">
                 <Col>
                   {" "}
                   <Card.Text className="m-0">
@@ -140,7 +139,9 @@ export default function MyProfile() {
                     variant="secondary"
                     title=""
                   >
-                    <Dropdown.Item onClick={()=>handleDeletePost(post.id)}>Delete Post {post.id}</Dropdown.Item>
+                    <Dropdown.Item onClick={() => handleDeletePost(post.id)}>
+                      Delete Post {post.id}
+                    </Dropdown.Item>
                   </DropdownButton>
                 </Col>
               </Row>
