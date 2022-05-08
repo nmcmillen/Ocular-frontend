@@ -81,7 +81,7 @@ export default function MyProfile() {
         </Row>
         <Row>
           <Col>
-            553 <br />
+            {userPosts.length} <br />
             Posts
           </Col>
           <Col>
