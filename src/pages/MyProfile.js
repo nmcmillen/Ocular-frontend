@@ -15,6 +15,8 @@ import {
 import { getPostData } from "../Data";
 import "./MyProfile.css";
 import request from "../components/services/api.request";
+import EditAvatar from "../components/EditAvatar";
+import EditProfile from "../components/EditProfile";
 
 export default function MyProfile() {
   const [state, dispatch] = useGlobalState();
@@ -67,8 +69,10 @@ export default function MyProfile() {
         />
         <Row>
           <Col>
-            <Button>Edit Profile</Button>
-            <Button>Edit Avatar</Button>
+            {/* <Button>Edit Profile</Button> */}
+            {/* <Button>Edit Avatar</Button> */}
+            <EditProfile />
+            <EditAvatar />
           </Col>
         </Row>
         <Row>
