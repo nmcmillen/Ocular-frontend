@@ -13,7 +13,7 @@ import {
   Image,
   Row,
 } from "react-bootstrap";
-import { getPostData, getUserData } from "../Data";
+import { getFollowerData, getPostData, getUserData } from "../Data";
 import "./UserProfile.css";
 // import request from "../components/services/api.request";
 
@@ -21,20 +21,44 @@ export default function UserProfile() {
   const [state, dispatch] = useGlobalState();
   const [posts, setPosts] = useState([]);
   const [profile, setProfile] = useState([]);
+  const [followers, setFollowers] = useState([])
 
   let { username } = useParams();
 
-  useEffect(() => {
-    getUserData().then((data) => {
-      setProfile(data);
-    });
-  }, []);
+  // useEffect(() => {
+  //   getUserData().then((data) => {
+  //     setProfile(data);
+  //   });
+  // }, []);
+  
+  // useEffect(() => {
+  //   getFollowerData().then((data) => {
+  //     setFollowers(data);
+  //   });
+  // }, []);
 
+  console.log(profile)
+
+  // set the user id by getting the username from profile and then the user id from that
+  // let userid = profile.filter
+
+  // console.log('username', username)
+  
   useEffect(() => {
     getPostData().then((data) => {
       setPosts(data);
     });
+    getUserData().then((data) => {
+      setProfile(data);
+    });
+    getFollowerData().then((data) => {
+      setFollowers(data);
+      // setFollowers(data.filter((user) => user.id === user.id));
+    });
   }, []);
+
+  console.log('follower info', followers)
+
 
   // ### MAY NEED ANOTHER USE EFFECT TO GET ONLY USER'S DATA BUT NEED TO GET THAT VIEW MAYBE ON BACKEND ###
 
@@ -45,6 +69,12 @@ export default function UserProfile() {
   let userProfile = profile.filter(
     (displayProfile) => displayProfile.username === username
   );
+
+  // let userFollowers = followers.filter(
+  //   (displayFollowers) => displayFollowers.username === username
+  // );
+
+  console.log('userpost', userPosts.id)
 
   return (
     <>
