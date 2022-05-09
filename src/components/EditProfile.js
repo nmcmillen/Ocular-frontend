@@ -1,12 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { useGlobalState } from "../context/GlobalState";
 import request from "./services/api.request";
+import { getPostData, getUserData } from "../Data";
 
 export default function EditProfile() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const [profile, setProfile] = useState([]);
+
+  useEffect(() => {
+    getUserData().then((data) => {
+      setProfile(data.filter((user) => user.id === state.currentUser.user_id));
+    });
+  }, []);
+
+  let userProfile = profile;
 
   const [state, dispatch] = useGlobalState();
   const [updateProfile, setUpdateProfile] = useState({
@@ -15,9 +26,6 @@ export default function EditProfile() {
     username: state.person.username,
     bio: state.person.bio,
   });
-
-  // able to check 'post' state in the console. working when adding post info 5/4 at 9pm
-  console.log("what is updateProfile", updateProfile);
 
   // handles the updates to create post modal from the text form and image/file upload
   const handleChange = (key, value) => {
@@ -39,7 +47,6 @@ export default function EditProfile() {
       url: `api/users/${state.currentUser.user_id}/`,
       method: "PATCH",
       data: newUpdateProfile,
-      // headers: { "Content-Type": "multipart/form-data" },
     }).then((resp) => {
       console.log(resp);
     });
@@ -55,72 +62,70 @@ export default function EditProfile() {
       >
         Update Profile
       </Button>
-
-      <Modal centered show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Profile</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="first_name">
-              <Form.Label>First Name</Form.Label>
-              <Form.Control
-                type="text"
-                // rows={3}
-                defaultValue={state.person.first_name}
-                // placeholder="Say something about your post"
-                maxLength="255"
-                onChange={(e) => handleChange("first_name", e.target.value)}
-                autoFocus
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="last_name">
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control
-                type="text"
-                // rows={3}
-                defaultValue={state.person.last_name}
-                // placeholder="Say something about your post"
-                maxLength="255"
-                onChange={(e) => handleChange("last_name", e.target.value)}
-                autoFocus
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="username">
-              <Form.Label>Username</Form.Label>
-              <Form.Control
-                type="text"
-                // rows={3}
-                defaultValue={state.person.username}
-                // placeholder="Say something about your post"
-                maxLength="255"
-                onChange={(e) => handleChange("username", e.target.value)}
-                autoFocus
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="bio">
-              <Form.Label>Bio</Form.Label>
-              <Form.Control
-                type="text"
-                // rows={3}
-                defaultValue={state.person.bio}
-                // placeholder="Say something about your post"
-                maxLength="255"
-                onChange={(e) => handleChange("bio", e.target.value)}
-                autoFocus
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button type="submit" variant="primary" onClick={handleUpdateProfile}>
-            Update Profile
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      {userProfile.map((user) => (
+        <Modal centered show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Edit Profile</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group className="mb-3" controlId="first_name">
+                <Form.Label>First Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  defaultValue={user.first_name}
+                  maxLength="255"
+                  onChange={(e) => handleChange("first_name", e.target.value)}
+                  autoFocus
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="last_name">
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  defaultValue={user.last_name}
+                  maxLength="255"
+                  onChange={(e) => handleChange("last_name", e.target.value)}
+                  autoFocus
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="username">
+                <Form.Label>Username</Form.Label>
+                <Form.Control
+                  type="text"
+                  defaultValue={user.username}
+                  maxLength="255"
+                  onChange={(e) => handleChange("username", e.target.value)}
+                  autoFocus
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="bio">
+                <Form.Label>Bio</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  defaultValue={user.bio}
+                  maxLength="255"
+                  onChange={(e) => handleChange("bio", e.target.value)}
+                  autoFocus
+                />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              variant="primary"
+              onClick={handleUpdateProfile}
+            >
+              Update Profile
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      ))}
     </>
   );
 }

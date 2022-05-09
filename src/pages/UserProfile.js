@@ -46,9 +46,6 @@ export default function UserProfile() {
     (displayProfile) => displayProfile.username === username
   );
 
-  console.log("feed me", userPosts.length);
-  // console.log("user data", userProfile);
-
   return (
     <>
       <HomeNavbar />
@@ -111,10 +108,7 @@ export default function UserProfile() {
                 <Card.Text>{post.created_date}</Card.Text>
               </Col>
             </Row>
-            <Card.Img
-              variant="top"
-              src={post.photos[0].images}
-            />
+            <Card.Img variant="top" src={post.photos[0].images} />
             <Card.Body className="p-0 m-2">
               <Row className="align-items-center">
                 <Col>

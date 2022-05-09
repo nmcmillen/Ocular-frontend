@@ -12,7 +12,7 @@ import {
   Image,
   Row,
 } from "react-bootstrap";
-import { getPostData } from "../Data";
+import { getPostData, getUserData } from "../Data";
 import "./MyProfile.css";
 import request from "../components/services/api.request";
 import EditAvatar from "../components/EditAvatar";
@@ -21,6 +21,13 @@ import EditProfile from "../components/EditProfile";
 export default function MyProfile() {
   const [state, dispatch] = useGlobalState();
   const [posts, setPosts] = useState([]);
+  const [profile, setProfile] = useState([]);
+
+  useEffect(() => {
+    getUserData().then((data) => {
+      setProfile(data);
+    });
+  }, []);
 
   useEffect(() => {
     getPostData().then((data) => {
@@ -28,24 +35,13 @@ export default function MyProfile() {
     });
   }, []);
 
+  let userProfile = profile.filter(
+    (displayProfile) => displayProfile.id === state.currentUser.user_id
+  );
+
   let userPosts = posts.filter(
     (displayPosts) => displayPosts.created_by.id === state.currentUser.user_id
   );
-
-  // ### WORKING ON HOW TO EDIT USER DATA HERE ###
-  // const [profile, setProfile] = useState({
-  //   firstName: state.person.first_name,
-  //   lastName: state.person.last_name,
-  //   bio: state.person.bio,
-  // });
-  // console.log("current user", profile);
-
-  // const handleChange = (key, value) => {
-  //   setProfile({
-  //     ...profile,
-  //     [key]: value,
-  //   });
-  // };
 
   let handleDeletePost = async (id) => {
     console.log("define clicked post", id);
@@ -61,43 +57,41 @@ export default function MyProfile() {
   return (
     <>
       <HomeNavbar />
-      <Container fluid className="profile-page text-center mt-3">
-        <Image
-          className="profile-avatar"
-          roundedCircle
-          src={state.person.avatar}
-        />
-        <Row>
-          <Col>
-            {/* <Button>Edit Profile</Button> */}
-            {/* <Button>Edit Avatar</Button> */}
-            <EditProfile />
-            <EditAvatar />
-          </Col>
-        </Row>
-        <Row>
-          <h3>
-            {state.person.first_name} {state.person.last_name}
-          </h3>
-        </Row>
-        <Row>
-          <h6>{state.person.bio}</h6>
-        </Row>
-        <Row>
-          <Col>
-            {userPosts.length} <br />
-            Posts
-          </Col>
-          <Col>
-            1,269 <br />
-            Followers
-          </Col>
-          <Col>
-            306 <br />
-            Following
-          </Col>
-        </Row>
-      </Container>
+      {userProfile.map((user) => (
+        <Container fluid className="profile-page text-center mt-3">
+          <Image className="profile-avatar" roundedCircle src={user.avatar} />
+          <Row>
+            <Col>
+              {/* <Button>Edit Profile</Button> */}
+              {/* <Button>Edit Avatar</Button> */}
+              <EditProfile />
+              <EditAvatar />
+            </Col>
+          </Row>
+          <Row>
+            <h3>
+              {user.first_name} {user.last_name}
+            </h3>
+          </Row>
+          <Row>
+            <h6>{user.bio}</h6>
+          </Row>
+          <Row>
+            <Col>
+              {userPosts.length} <br />
+              Posts
+            </Col>
+            <Col>
+              1,269 <br />
+              Followers
+            </Col>
+            <Col>
+              306 <br />
+              Following
+            </Col>
+          </Row>
+        </Container>
+      ))}
 
       {/* https://www.freecodecamp.org/news/build-a-search-filter-using-react-and-react-hooks/
       <Card.Group itemsPerRow={3} style={{ marginTop: 20 }}> */}
@@ -123,10 +117,7 @@ export default function MyProfile() {
                 <Card.Text>{post.created_date}</Card.Text>
               </Col>
             </Row>
-            <Card.Img
-              variant="top"
-              src={post.photos[0].images}
-            />
+            <Card.Img variant="top" src={post.photos[0].images} />
             <Card.Body className="p-0 m-2">
               <Row className="align-items-center">
                 <Col>

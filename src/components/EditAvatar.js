@@ -10,13 +10,11 @@ export default function EditAvatar() {
 
   const [state, dispatch] = useGlobalState();
   const [avatar, setAvatar] = useState({
-    // created_by: state.currentUser.user_id,
-    // description: "",
-    avatar: "null"
+    avatar: "null",
   });
 
   // able to check 'avatar' state in the console. working when adding avatar info 5/4 at 9pm
-  console.log("what is avatar", avatar);
+  // console.log("what is avatar", avatar);
 
   // handles the updates to create avatar modal from the text form and image/file upload
   const handleChange = (key, value) => {
@@ -35,16 +33,19 @@ export default function EditAvatar() {
       url: `api/users/${state.currentUser.user_id}/`,
       method: "PATCH",
       data: newAvatar,
-      // headers: { "Content-Type": "multipart/form-data" },
     }).then((resp) => {
       console.log(resp);
     });
-    // window.location.reload(false);
+    window.location.reload(false);
   };
 
   return (
     <>
-      <Button className="text-white shadow-none" variant="primary" onClick={handleShow}>
+      <Button
+        className="text-white shadow-none"
+        variant="primary"
+        onClick={handleShow}
+      >
         Update avatar
       </Button>
 
