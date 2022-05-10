@@ -45,6 +45,11 @@ export default function UserProfile() {
     .filter((getid) => getid.username === username)
     .map((give) => give.id);
 
+  // Tried using .find but won't return id
+  // let testID = profile
+  // .find((getid) => getid.username === username).id;
+  // console.log('test username', testID)
+
   // ### Displays the current page user's posts ###
   let userPosts = posts.filter(
     (displayPosts) => displayPosts.created_by.username === username
@@ -65,43 +70,16 @@ export default function UserProfile() {
     (displayFollowers) => displayFollowers.follower === userID[0]
   );
 
-//   if (isLoggedIn) {
-//     return <UserGreeting />;
-//   }
-//   return <GuestGreeting />;
-// }
-
-  // ### Checks if a user is signed in. If no user, will not run this. Will break page without if statement.###
-  
-  // if (state.currentUser) {
-  //   let relationshipID = follow
-  //     .filter(
-  //       (relationship) =>
-  //         relationship.user === state.currentUser.user_id &&
-  //         relationship.follower === userID[0]
-  //     )
-  //     .map((follow) => follow.id);
-  // }
-
-    // let needle = haystack.find((relationship) => conditions) --> found object (needle.property)
-    // let relationshipID = follow
-    //   .filter(
-    //     (relationship) =>
-    //       relationship.user === state.currentUser?.user_id &&
-    //       relationship.follower === userID[0]
-    //   )
-    //   .map((follow) => follow.id);
-
+  // Searches to find if follow relationship exists. If not uses ? (optional chaining) to keep rendering page which returns relationshipID as undefined
   let relationshipID = follow.find(
     (relationship) =>
       relationship.user === state.currentUser?.user_id &&
       relationship.follower === userID[0]
   )?.id;
-      
 
-      // look up .find
+  // look up .find
 
-  console.log(relationshipID)
+  console.log(relationshipID);
 
   // ### FOLLOW ###
   let handleFollow = async () => {
@@ -141,38 +119,21 @@ export default function UserProfile() {
           <Container fluid className="profile-page text-center mt-3">
             <Image className="profile-avatar" roundedCircle src={user.avatar} />
             <Row>
-            {/* ### NEED TO FIX THIS COLUMN TO NOT RUN IF NO USER SIGNED IN ### */}
-            {/* {
-              currentUser ? (
-                <div>
-                  {following && <Button>Unfollow</Button>}
-                  {notFollowing && <Button>Follow</Button>}
-                </div>
-              ) : (
-
-              )
-            } */}
-            
-              <Col>
-                {state.currentUser?.user_id === userID[0] && (
-                  navigate("/profile"))}
-                {!relationshipID && (
-                  
-                    <Button onClick={handleFollow}>Follow</Button>
-                  
-                )}
-                {relationshipID && (
-                  
+              {/* Ternary if user exists to display buttons or not */}
+              {state.currentUser ? (
+                <Col>
+                  {/* Ternary if follow relationship exists or not to display follow/unfollow button */}
+                  {state.currentUser?.user_id === userID[0] &&
+                    navigate("/profile")}
+                  {relationshipID ? (
                     <Button onClick={handleUnfollow}>Unfollow</Button>
-                  
-                )}
-
-                {/* {true && <div>Render if True</div>}
-                {!false && <div>Render if not False</div>}
-                {state.currentUser?.user_id && following && <Button>Unfollow</Button>}
-                {state.currentUser?.user_id && notFollowing && <Button>Follow</Button>} */}
-              </Col>
-              {/* ### END COL HERE TO FIX ### */}
+                  ) : (
+                    <Button onClick={handleFollow}>Follow</Button>
+                  )}
+                </Col>
+              ) : (
+                <></>
+              )}
             </Row>
             <Row>
               <h3>

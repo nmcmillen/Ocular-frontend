@@ -39,9 +39,52 @@ let handleCreatePost = (e)  => {
     });
 }
 
+// let needle = haystack.find((relationship) => conditions) --> found object (needle.property)
+
+// Not Working
+  // if (state.currentUser) {
+  //   let relationshipID = follow
+  //     .filter(
+  //       (relationship) =>
+  //         relationship.user === state.currentUser.user_id &&
+  //         relationship.follower === userID[0]
+  //     )
+  //     .map((follow) => follow.id);
+  // }
 
 
+// Working
+  // let relationshipID = follow
+  //   .filter(
+  //     (relationship) =>
+  //       relationship.user === state.currentUser?.user_id &&
+  //       relationship.follower === userID[0]
+  //   )
+  //   .map((follow) => follow.id);
 
+
+// Working way to show correct follow/unfollow buttons using conditional rendering &&
+{/* <Col>
+{state.currentUser?.user_id === userID[0] &&
+  navigate("/profile")}
+{!relationshipID && (
+  <Button onClick={handleFollow}>Follow</Button>
+)}
+{relationshipID && (
+  <Button onClick={handleUnfollow}>Unfollow</Button>
+)}
+</Col> */}
+
+  {/* Ternary to show follow/unfollow depending on if relationshipID exists */}
+  // <Col>
+  //   {state.currentUser?.user_id === userID[0] &&
+  //     navigate("/profile")}
+  //   {relationshipID ? (
+  //     <Button onClick={handleUnfollow}>Unfollow</Button>
+  //   ) : (
+  //     <Button onClick={handleFollow}>Follow</Button>
+  //   )}
+  // </Col>
 
 
 
