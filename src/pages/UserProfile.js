@@ -15,28 +15,17 @@ import {
 } from "react-bootstrap";
 import { getFollowerData, getPostData, getUserData } from "../Data";
 import "./UserProfile.css";
-// import request from "../components/services/api.request";
+import request from "../components/services/api.request";
 
 export default function UserProfile() {
   const [state, dispatch] = useGlobalState();
   const [posts, setPosts] = useState([]);
   const [profile, setProfile] = useState([]);
-  const [follow, setFollow] = useState([])
+  const [follow, setFollow] = useState([]);
 
   let { username } = useParams();
+  let navigate = useNavigate();
 
-  // useEffect(() => {
-  //   getUserData().then((data) => {
-  //     setProfile(data);
-  //   });
-  // }, []);
-  
-  // useEffect(() => {
-  //   getFollowerData().then((data) => {
-  //     setFollowers(data);
-  //   });
-  // }, []);
-  
   useEffect(() => {
     getPostData().then((data) => {
       setPosts(data);
@@ -50,9 +39,16 @@ export default function UserProfile() {
     });
   }, []);
 
-
   // Gets user id of current page by getting the username from profile and then the user id from that
-  let userID = profile.filter((getid) => getid.username === username).map((give) => give.id)
+  // Use .find here
+  let userID = profile
+    .filter((getid) => getid.username === username)
+    .map((give) => give.id);
+
+  // Tried using .find but won't return id
+  // let testID = profile
+  // .find((getid) => getid.username === username).id;
+  // console.log('test username', testID)
 
   // ### Displays the current page user's posts ###
   let userPosts = posts.filter(
@@ -74,10 +70,46 @@ export default function UserProfile() {
     (displayFollowers) => displayFollowers.follower === userID[0]
   );
 
-  // console.log('users id', userID)
-  // console.log('follower info', followers)
-  // console.log('userfollowing', userFollowing.length)
-  // console.log('userfollowers', userFollowers.length)
+  // Searches to find if follow relationship exists. If not uses ? (optional chaining) to keep rendering page which returns relationshipID as undefined
+  let relationshipID = follow.find(
+    (relationship) =>
+      relationship.user === state.currentUser?.user_id &&
+      relationship.follower === userID[0]
+  )?.id;
+
+  // look up .find
+
+  console.log(relationshipID);
+
+  // ### FOLLOW ###
+  let handleFollow = async () => {
+    const newFollower = new FormData();
+    newFollower.append("user", state.currentUser.user_id);
+    newFollower.append("follower", userID[0]);
+    let resp = await request({
+      url: `api/followers/`,
+      method: "POST",
+      data: newFollower,
+    }).then((resp) => {
+      console.log(resp);
+    });
+    window.location.reload(false);
+    // this.forceUpdate()
+  };
+
+  // ### UNFOLLOW ###
+  let handleUnfollow = async () => {
+    let resp = await request({
+      url: `api/followers/${relationshipID}/`,
+      method: "DELETE",
+    }).then((resp) => {
+      console.log(resp);
+    });
+    window.location.reload(false);
+    // this.forceUpdate()
+  };
+
+  // look up optional chaining
 
   return (
     <>
@@ -87,9 +119,21 @@ export default function UserProfile() {
           <Container fluid className="profile-page text-center mt-3">
             <Image className="profile-avatar" roundedCircle src={user.avatar} />
             <Row>
-              <Col>
-                <Button>Follow</Button>
-              </Col>
+              {/* Ternary if user exists to display buttons or not */}
+              {state.currentUser ? (
+                <Col>
+                  {/* Ternary if follow relationship exists or not to display follow/unfollow button */}
+                  {state.currentUser?.user_id === userID[0] &&
+                    navigate("/profile")}
+                  {relationshipID ? (
+                    <Button onClick={handleUnfollow}>Unfollow</Button>
+                  ) : (
+                    <Button onClick={handleFollow}>Follow</Button>
+                  )}
+                </Col>
+              ) : (
+                <></>
+              )}
             </Row>
             <Row>
               <h3>
