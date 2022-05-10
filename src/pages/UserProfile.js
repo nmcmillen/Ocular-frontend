@@ -40,6 +40,7 @@ export default function UserProfile() {
   }, []);
 
   // Gets user id of current page by getting the username from profile and then the user id from that
+  // Use .find here
   let userID = profile
     .filter((getid) => getid.username === username)
     .map((give) => give.id);
@@ -64,17 +65,46 @@ export default function UserProfile() {
     (displayFollowers) => displayFollowers.follower === userID[0]
   );
 
-  let relationshipID = follow
-    .filter(
-      (relationship) =>
-        relationship.user === state.currentUser.user_id &&
-        relationship.follower === userID[0]
-    )
-    .map((follow) => follow.id);
+//   if (isLoggedIn) {
+//     return <UserGreeting />;
+//   }
+//   return <GuestGreeting />;
+// }
+
+  // ### Checks if a user is signed in. If no user, will not run this. Will break page without if statement.###
+  
+  // if (state.currentUser) {
+  //   let relationshipID = follow
+  //     .filter(
+  //       (relationship) =>
+  //         relationship.user === state.currentUser.user_id &&
+  //         relationship.follower === userID[0]
+  //     )
+  //     .map((follow) => follow.id);
+  // }
+
+    // let needle = haystack.find((relationship) => conditions) --> found object (needle.property)
+    // let relationshipID = follow
+    //   .filter(
+    //     (relationship) =>
+    //       relationship.user === state.currentUser?.user_id &&
+    //       relationship.follower === userID[0]
+    //   )
+    //   .map((follow) => follow.id);
+
+  let relationshipID = follow.find(
+    (relationship) =>
+      relationship.user === state.currentUser?.user_id &&
+      relationship.follower === userID[0]
+  )?.id;
+      
+
+      // look up .find
+
+  console.log(relationshipID)
 
   // ### FOLLOW ###
   let handleFollow = async () => {
-    console.log("button test");
     const newFollower = new FormData();
     newFollower.append("user", state.currentUser.user_id);
     newFollower.append("follower", userID[0]);
@@ -86,6 +116,7 @@ export default function UserProfile() {
       console.log(resp);
     });
     window.location.reload(false);
+    // this.forceUpdate()
   };
 
   // ### UNFOLLOW ###
@@ -97,31 +128,51 @@ export default function UserProfile() {
       console.log(resp);
     });
     window.location.reload(false);
+    // this.forceUpdate()
   };
+
+  // look up optional chaining
 
   return (
     <>
       <HomeNavbar />
-      {/* <h1>{relationshipID}</h1> */}
       <div>
         {userProfile.map((user) => (
           <Container fluid className="profile-page text-center mt-3">
             <Image className="profile-avatar" roundedCircle src={user.avatar} />
             <Row>
+            {/* ### NEED TO FIX THIS COLUMN TO NOT RUN IF NO USER SIGNED IN ### */}
+            {/* {
+              currentUser ? (
+                <div>
+                  {following && <Button>Unfollow</Button>}
+                  {notFollowing && <Button>Follow</Button>}
+                </div>
+              ) : (
+
+              )
+            } */}
+            
               <Col>
-                {state.currentUser.user_id === userID[0] &&
-                  navigate("/profile")}
-                {!relationshipID[0] && (
-                  <>
+                {state.currentUser?.user_id === userID[0] && (
+                  navigate("/profile"))}
+                {!relationshipID && (
+                  
                     <Button onClick={handleFollow}>Follow</Button>
-                  </>
+                  
                 )}
-                {relationshipID[0] && (
-                  <>
+                {relationshipID && (
+                  
                     <Button onClick={handleUnfollow}>Unfollow</Button>
-                  </>
+                  
                 )}
+
+                {/* {true && <div>Render if True</div>}
+                {!false && <div>Render if not False</div>}
+                {state.currentUser?.user_id && following && <Button>Unfollow</Button>}
+                {state.currentUser?.user_id && notFollowing && <Button>Follow</Button>} */}
               </Col>
+              {/* ### END COL HERE TO FIX ### */}
             </Row>
             <Row>
               <h3>
