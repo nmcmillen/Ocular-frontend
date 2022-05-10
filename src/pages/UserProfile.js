@@ -21,7 +21,7 @@ export default function UserProfile() {
   const [state, dispatch] = useGlobalState();
   const [posts, setPosts] = useState([]);
   const [profile, setProfile] = useState([]);
-  const [followers, setFollowers] = useState([])
+  const [follow, setFollow] = useState([])
 
   let { username } = useParams();
 
@@ -36,12 +36,6 @@ export default function UserProfile() {
   //     setFollowers(data);
   //   });
   // }, []);
-
-  // let identify = profile.filter((show) => show.username === username)
-  // console.log('identify', identify[3])
-  // console.log(identify.map((give) => give.id))
-
-  // console.log('username', username)
   
   useEffect(() => {
     getPostData().then((data) => {
@@ -51,47 +45,39 @@ export default function UserProfile() {
       setProfile(data);
     });
     getFollowerData().then((data) => {
-      setFollowers(data);
-      // setFollowers(data.filter((user) => user.id === user.id));
+      setFollow(data);
+      // setFollow(data.filter((user) => user.id === user.id));
     });
   }, []);
 
-  console.log('follower info', followers)
 
-  // set the user id by getting the username from profile and then the user id from that
-  let userid = profile.filter((getid) => getid.username === username)
-  let identity = userid.map((give) => give.id)
+  // Gets user id of current page by getting the username from profile and then the user id from that
+  let userID = profile.filter((getid) => getid.username === username).map((give) => give.id)
 
-  // let identity = function() {
-  //   let userid = profile.filter((getid) => getid.username === username)
-  //   let result = userid.map((give) => give.id)
-  //   return result
-  // }
-  
-    console.log('users id', identity)
-
-  // ### MAY NEED ANOTHER USE EFFECT TO GET ONLY USER'S DATA BUT NEED TO GET THAT VIEW MAYBE ON BACKEND ###
-
+  // ### Displays the current page user's posts ###
   let userPosts = posts.filter(
     (displayPosts) => displayPosts.created_by.username === username
   );
 
+  // ### Displays the current page user's profile info ###
   let userProfile = profile.filter(
     (displayProfile) => displayProfile.username === username
   );
 
-  // I believe this is displaying the amount user is following, not their followers
-  // ie: nmcmillen is user #2 and is following 3 people
-  let userFollowing = followers.filter(
-    (displayFollowing) => displayFollowing.user === identity[0]
+  // ### Displays the current page user's people they are following ###
+  let userFollowing = follow.filter(
+    (displayFollowing) => displayFollowing.user === userID[0]
   );
 
-  let userFollowers = followers.filter(
-    (displayFollowers) => displayFollowers.follower === identity[0]
+  // ### Displays the current page user's followers ###
+  let userFollowers = follow.filter(
+    (displayFollowers) => displayFollowers.follower === userID[0]
   );
 
-  console.log('userfollowing', userFollowing.length)
-  console.log('userfollowers', userFollowers.length)
+  // console.log('users id', userID)
+  // console.log('follower info', followers)
+  // console.log('userfollowing', userFollowing.length)
+  // console.log('userfollowers', userFollowers.length)
 
   return (
     <>
