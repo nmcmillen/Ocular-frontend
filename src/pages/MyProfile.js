@@ -12,7 +12,7 @@ import {
   Image,
   Row,
 } from "react-bootstrap";
-import { getPostData, getUserData } from "../Data";
+import { getFollowerData, getPostData, getUserData } from "../Data";
 import "./MyProfile.css";
 import request from "../components/services/api.request";
 import EditAvatar from "../components/EditAvatar";
@@ -22,10 +22,15 @@ export default function MyProfile() {
   const [state, dispatch] = useGlobalState();
   const [posts, setPosts] = useState([]);
   const [profile, setProfile] = useState([]);
+  const [follow, setFollow] = useState([])
 
   useEffect(() => {
     getUserData().then((data) => {
       setProfile(data);
+    });
+    getFollowerData().then((data) => {
+      setFollow(data);
+      // setFollowers(data.filter((user) => user.id === user.id));
     });
   }, []);
 
@@ -35,12 +40,24 @@ export default function MyProfile() {
     });
   }, []);
 
+  // ### Displays the current page user's profile info ###
   let userProfile = profile.filter(
     (displayProfile) => displayProfile.id === state.currentUser.user_id
   );
 
+  // ### Displays the current page user's posts ###
   let userPosts = posts.filter(
     (displayPosts) => displayPosts.created_by.id === state.currentUser.user_id
+  );
+
+  // ### Displays the current page user's people they are following ###
+  let userFollowing = follow.filter(
+    (displayFollowing) => displayFollowing.user === state.currentUser.user_id
+  );
+
+  // ### Displays the current page user's followers ###
+  let userFollowers = follow.filter(
+    (displayFollowers) => displayFollowers.follower === state.currentUser.user_id
   );
 
   let handleDeletePost = async (id) => {
@@ -82,11 +99,11 @@ export default function MyProfile() {
               Posts
             </Col>
             <Col>
-              1,269 <br />
+            {userFollowers.length} <br />
               Followers
             </Col>
             <Col>
-              306 <br />
+            {userFollowing.length} <br />
               Following
             </Col>
           </Row>

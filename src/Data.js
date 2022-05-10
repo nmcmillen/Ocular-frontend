@@ -17,3 +17,9 @@ export async function getUserData() {
     // console.log('userdata.js', response.data)
     return response.data;
 }
+
+export async function getFollowerData() {
+    let response = await axios.get(apiLink + 'api/followers/')
+    // console.log('follower data.js', response.data)
+    return response.data;
+}
