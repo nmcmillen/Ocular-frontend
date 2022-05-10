@@ -15,28 +15,17 @@ import {
 } from "react-bootstrap";
 import { getFollowerData, getPostData, getUserData } from "../Data";
 import "./UserProfile.css";
-// import request from "../components/services/api.request";
+import request from "../components/services/api.request";
 
 export default function UserProfile() {
   const [state, dispatch] = useGlobalState();
   const [posts, setPosts] = useState([]);
   const [profile, setProfile] = useState([]);
-  const [follow, setFollow] = useState([])
+  const [follow, setFollow] = useState([]);
 
   let { username } = useParams();
+  let navigate = useNavigate();
 
-  // useEffect(() => {
-  //   getUserData().then((data) => {
-  //     setProfile(data);
-  //   });
-  // }, []);
-  
-  // useEffect(() => {
-  //   getFollowerData().then((data) => {
-  //     setFollowers(data);
-  //   });
-  // }, []);
-  
   useEffect(() => {
     getPostData().then((data) => {
       setPosts(data);
@@ -50,9 +39,10 @@ export default function UserProfile() {
     });
   }, []);
 
-
   // Gets user id of current page by getting the username from profile and then the user id from that
-  let userID = profile.filter((getid) => getid.username === username).map((give) => give.id)
+  let userID = profile
+    .filter((getid) => getid.username === username)
+    .map((give) => give.id);
 
   // ### Displays the current page user's posts ###
   let userPosts = posts.filter(
@@ -74,21 +64,63 @@ export default function UserProfile() {
     (displayFollowers) => displayFollowers.follower === userID[0]
   );
 
-  // console.log('users id', userID)
-  // console.log('follower info', followers)
-  // console.log('userfollowing', userFollowing.length)
-  // console.log('userfollowers', userFollowers.length)
+  let relationshipID = follow
+    .filter(
+      (relationship) =>
+        relationship.user === state.currentUser.user_id &&
+        relationship.follower === userID[0]
+    )
+    .map((follow) => follow.id);
+
+  // ### FOLLOW ###
+  let handleFollow = async () => {
+    console.log("button test");
+    const newFollower = new FormData();
+    newFollower.append("user", state.currentUser.user_id);
+    newFollower.append("follower", userID[0]);
+    let resp = await request({
+      url: `api/followers/`,
+      method: "POST",
+      data: newFollower,
+    }).then((resp) => {
+      console.log(resp);
+    });
+    window.location.reload(false);
+  };
+
+  // ### UNFOLLOW ###
+  let handleUnfollow = async () => {
+    let resp = await request({
+      url: `api/followers/${relationshipID}/`,
+      method: "DELETE",
+    }).then((resp) => {
+      console.log(resp);
+    });
+    window.location.reload(false);
+  };
 
   return (
     <>
       <HomeNavbar />
+      {/* <h1>{relationshipID}</h1> */}
       <div>
         {userProfile.map((user) => (
           <Container fluid className="profile-page text-center mt-3">
             <Image className="profile-avatar" roundedCircle src={user.avatar} />
             <Row>
               <Col>
-                <Button>Follow</Button>
+                {state.currentUser.user_id === userID[0] &&
+                  navigate("/profile")}
+                {!relationshipID[0] && (
+                  <>
+                    <Button onClick={handleFollow}>Follow</Button>
+                  </>
+                )}
+                {relationshipID[0] && (
+                  <>
+                    <Button onClick={handleUnfollow}>Unfollow</Button>
+                  </>
+                )}
               </Col>
             </Row>
             <Row>

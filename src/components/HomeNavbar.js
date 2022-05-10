@@ -22,7 +22,7 @@ export default function HomeNavbar() {
 
   return (
     <div>
-      <Navbar bg="dark" variant="dark" expand="md">
+      <Navbar bg="dark" variant="dark" expand="lg">
         <Container>
           <Link to="/" style={{ textDecoration: "none" }}>
             <Navbar.Brand>
@@ -47,7 +47,6 @@ export default function HomeNavbar() {
               >
                 Feed
               </Link>
-              {/* || !localStorage.getItem('user')) */}
               {!state.currentUser && (
                 <>
                   <LoginModal />
