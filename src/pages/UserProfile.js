@@ -37,10 +37,9 @@ export default function UserProfile() {
   //   });
   // }, []);
 
-  console.log(profile)
-
-  // set the user id by getting the username from profile and then the user id from that
-  // let userid = profile.filter
+  // let identify = profile.filter((show) => show.username === username)
+  // console.log('identify', identify[3])
+  // console.log(identify.map((give) => give.id))
 
   // console.log('username', username)
   
@@ -59,6 +58,17 @@ export default function UserProfile() {
 
   console.log('follower info', followers)
 
+  // set the user id by getting the username from profile and then the user id from that
+  let userid = profile.filter((getid) => getid.username === username)
+  let identity = userid.map((give) => give.id)
+
+  // let identity = function() {
+  //   let userid = profile.filter((getid) => getid.username === username)
+  //   let result = userid.map((give) => give.id)
+  //   return result
+  // }
+  
+    console.log('users id', identity)
 
   // ### MAY NEED ANOTHER USE EFFECT TO GET ONLY USER'S DATA BUT NEED TO GET THAT VIEW MAYBE ON BACKEND ###
 
@@ -70,11 +80,18 @@ export default function UserProfile() {
     (displayProfile) => displayProfile.username === username
   );
 
-  // let userFollowers = followers.filter(
-  //   (displayFollowers) => displayFollowers.username === username
-  // );
+  // I believe this is displaying the amount user is following, not their followers
+  // ie: nmcmillen is user #2 and is following 3 people
+  let userFollowing = followers.filter(
+    (displayFollowing) => displayFollowing.user === identity[0]
+  );
 
-  console.log('userpost', userPosts.id)
+  let userFollowers = followers.filter(
+    (displayFollowers) => displayFollowers.follower === identity[0]
+  );
+
+  console.log('userfollowing', userFollowing.length)
+  console.log('userfollowers', userFollowers.length)
 
   return (
     <>
@@ -102,11 +119,11 @@ export default function UserProfile() {
                 Posts
               </Col>
               <Col>
-                1,269 <br />
+                {userFollowers.length} <br />
                 Followers
               </Col>
               <Col>
-                306 <br />
+                {userFollowing.length} <br />
                 Following
               </Col>
             </Row>
