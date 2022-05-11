@@ -58,13 +58,13 @@ export default function SearchForm() {
           <div className="dataResult">
             {users.map((user) => {
               return (
-                <div>
+                <div className="user-search">
                   <Link
                     to={`/userprofile/${user.username}`}
                     style={{ color: "black", textDecoration: "none" }}
                   >
                     <Row className="p-0 m-2 user-header">
-                      <Col className="p-0" xs={7}>
+                      <Col className="p-1">
                         <Image
                           className="avatar ml-1"
                           roundedCircle
@@ -83,5 +83,3 @@ export default function SearchForm() {
     </>
   );
 }
-
-// href={}

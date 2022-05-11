@@ -19,6 +19,7 @@
     overflow-y: auto;
   }
 
+
 /* .dataResult {
     margin-top: 5px;
     width: 300px;
@@ -51,6 +52,6 @@
     text-decoration: none;
   }
   
-  a:hover {
+  .user-search:hover {
     background-color: lightgrey;
   }
