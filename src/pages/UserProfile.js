@@ -195,7 +195,7 @@ export default function UserProfile() {
               </Row>
 
               <Card.Text>
-                <strong>{post.created_by.username}</strong> {post.description}
+                <strong>{post.created_by.username}</strong> {(post.description).slice(2,-2)}
               </Card.Text>
             </Card.Body>
           </Card>

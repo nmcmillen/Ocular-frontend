@@ -14,9 +14,9 @@ export default function PostLayout() {
     });
   }, []);
 
-  // if (posts.length > 0) {
-  //   console.log(posts[2].description)
-  //   }
+  if (posts.length > 0) {
+    console.log(posts[2].description)
+    }
 
   return (
     <>
@@ -59,7 +59,7 @@ export default function PostLayout() {
                 >
                   <strong>{post.created_by.username}</strong>
                 </Link>{" "}
-                {post.description}
+                {(post.description).slice(2,-2)}
               </Card.Text>
             </Card.Body>
           </Card>
