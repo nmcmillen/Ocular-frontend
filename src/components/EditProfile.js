@@ -63,7 +63,7 @@ export default function EditProfile() {
         Update Profile
       </Button>
       {userProfile.map((user) => (
-        <Modal centered show={show} onHide={handleClose}>
+        <Modal centered key={user.id} show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Edit Profile</Modal.Title>
           </Modal.Header>

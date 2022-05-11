@@ -75,7 +75,7 @@ export default function MyProfile() {
     <>
       <HomeNavbar />
       {userProfile.map((user) => (
-        <Container fluid className="profile-page text-center mt-3">
+        <Container key={user.id} fluid className="profile-page text-center mt-3">
           <Image className="profile-avatar" roundedCircle src={user.avatar} />
           <Row>
             <Col>
@@ -117,7 +117,7 @@ export default function MyProfile() {
       <div>
         {/* <Row xs={1} md={2} className="g-4"> */}
         {userPosts.map((post) => (
-          <Card className="mx-auto mt-4" id="post">
+          <Card key={post.id} className="mx-auto mt-4" id="post">
             <Row className="p-0 m-2 post-header">
               <Col className="p-0" xs={7}>
                 <Image
