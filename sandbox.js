@@ -1,3 +1,45 @@
+return (
+  <div className="search">
+    <div className="searchInputs">
+      <input
+        type="text"
+        placeholder={placeholder}
+        value={wordEntered}
+        onChange={handleFilter}
+      />
+      <div className="searchIcon">
+        {filteredData.length === 0 ? (
+          <SearchIcon />
+        ) : (
+          <CloseIcon id="clearBtn" onClick={clearInput} />
+        )}
+      </div>
+    </div>
+    {filteredData.length != 0 && (
+      <div className="dataResult">
+        {filteredData.slice(0, 15).map((value, key) => {
+          return (
+            <a className="dataItem" href={value.link} target="_blank">
+              <p>{value.title} </p>
+            </a>
+          );
+        })}
+      </div>
+    )}
+  </div>
+);
+}
+
+
+
+
+
+
+
+
+
+
+
 
 // GAVE A 200 ACCEPTED STATUS BUT DIDN'T CREATE A POST. NOTHING IN BODY
 let handleCreatePost = (e)  => {
@@ -87,10 +129,16 @@ let handleCreatePost = (e)  => {
   // </Col>
 
 
-
-
-
-
+    // useEffect only runs if 'search'has 2 or more characters
+    useEffect(() => {
+      if (search.length > 1) {
+        getUserData(search).then((data) => {
+          setUsers(data);
+        });
+      }
+    }, [search]);
+    // [search] allows the useEffect to keep an eye on "search" each time it is changed
+    // and will update the return data when search is updated
 
 
 
