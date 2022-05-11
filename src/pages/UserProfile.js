@@ -46,8 +46,7 @@ export default function UserProfile() {
     .map((give) => give.id);
 
   // Tried using .find but won't return id
-  // let testID = profile
-  // .find((getid) => getid.username === username).id;
+  // let testID = profile.find((getid) => getid.username === username);
   // console.log('test username', testID)
 
   // ### Displays the current page user's posts ###
@@ -76,7 +75,6 @@ export default function UserProfile() {
       relationship.user === state.currentUser?.user_id &&
       relationship.follower === userID[0]
   )?.id;
-
   // look up .find
 
   console.log(relationshipID);
@@ -116,7 +114,7 @@ export default function UserProfile() {
       <HomeNavbar />
       <div>
         {userProfile.map((user) => (
-          <Container fluid className="profile-page text-center mt-3">
+          <Container fluid key={user.id} className="profile-page text-center mt-3">
             <Image className="profile-avatar" roundedCircle src={user.avatar} />
             <Row>
               {/* Ternary if user exists to display buttons or not */}
@@ -168,7 +166,7 @@ export default function UserProfile() {
       <div>
         {/* <Row xs={1} md={2} className="g-4"> */}
         {userPosts.map((post) => (
-          <Card className="mx-auto mt-4" id="post">
+          <Card key={post.id} className="mx-auto mt-4" id="post">
             <Row className="p-0 m-2 post-header">
               <Col className="p-0" xs={7}>
                 <Image
