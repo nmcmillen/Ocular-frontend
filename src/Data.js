@@ -1,8 +1,8 @@
 import axios from "axios";
 
 // ***This link may change***
-let apiLink =
-  "https://8000-nmcmillen-ocularbackend-sm1tv8tjiev.ws-us44.gitpod.io/";
+let apiLink = process.env.REACT_APP_OCULAR_API_URL
+// "https://8000-nmcmillen-ocularbackend-sm1tv8tjiev.ws-us44.gitpod.io/";
 // let apiLink = 'https://8000-nmcmillen-ocularbackend-sm1tv8tjiev.ws-us44.gitpod.io/api/posts/'
 
 // ### GET POSTS DATA ONLY ###
