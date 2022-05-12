@@ -30,9 +30,8 @@ export async function getFollowerData() {
   // console.log('follower data.js', response.data)
   return response.data;
 }
-
-// export async function getUserData(search) {
-//     let response = await axios.get(apiLink + 'api/users/')
-//     // let response = await axios.get(apiLink + `api/users/?search=${search}`)
-//     // console.log('userdata.js', response.data)
-//     return response.data;
+export async function getReactionData() {
+  let response = await axios.get(apiLink + "api/postreactions/");
+  // console.log('reaction data.js', response.data)
+  return response.data;
+}
