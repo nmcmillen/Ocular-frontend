@@ -9,9 +9,9 @@ export default function SearchForm() {
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState("");
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    alert("form submitted");
+  function handleSubmit() {
+    // e.preventDefault();
+    // alert("form submitted");
     setSearch("");
   }
 
@@ -41,7 +41,7 @@ export default function SearchForm() {
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search for people or photos"
           />
-          <button>
+          {/* <button>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -52,19 +52,20 @@ export default function SearchForm() {
             >
               <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
             </svg>
-          </button>
+          </button> */}
         </form>
         {users.length !== 0 && (
           <div className="dataResult">
             {users.map((user) => {
               return (
-                <div className="user-search">
+                <div key={user.id} className="user-search">
                   <Link
                     to={`/userprofile/${user.username}`}
+                    onClick={handleSubmit}
                     style={{ color: "black", textDecoration: "none" }}
                   >
-                    <Row className="p-0 m-2 user-header">
-                      <Col className="p-1">
+                    <Row className="p-2">
+                      <Col className="">
                         <Image
                           className="avatar ml-1"
                           roundedCircle
