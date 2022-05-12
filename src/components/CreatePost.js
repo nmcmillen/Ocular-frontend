@@ -16,7 +16,7 @@ export default function CreatePost() {
   });
 
   // able to check 'post' state in the console. working when adding post info 5/4 at 9pm
-  console.log("what is post", post);
+  // console.log("what is post", post);
 
   // handles the updates to create post modal from the text form and image/file upload
   const handleChange = (key, value) => {
@@ -37,7 +37,6 @@ export default function CreatePost() {
       url: "api/posts/",
       method: "POST",
       data: newPost,
-      // headers: { "Content-Type": "multipart/form-data" },
     }).then((resp) => {
       console.log(resp);
     });
@@ -46,7 +45,11 @@ export default function CreatePost() {
 
   return (
     <>
-      <Button className="text-white" variant="" onClick={handleShow}>
+      <Button
+        className="text-white shadow-none"
+        variant=""
+        onClick={handleShow}
+      >
         Create Post
       </Button>
 

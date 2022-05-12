@@ -1,3 +1,45 @@
+return (
+  <div className="search">
+    <div className="searchInputs">
+      <input
+        type="text"
+        placeholder={placeholder}
+        value={wordEntered}
+        onChange={handleFilter}
+      />
+      <div className="searchIcon">
+        {filteredData.length === 0 ? (
+          <SearchIcon />
+        ) : (
+          <CloseIcon id="clearBtn" onClick={clearInput} />
+        )}
+      </div>
+    </div>
+    {filteredData.length != 0 && (
+      <div className="dataResult">
+        {filteredData.slice(0, 15).map((value, key) => {
+          return (
+            <a className="dataItem" href={value.link} target="_blank">
+              <p>{value.title} </p>
+            </a>
+          );
+        })}
+      </div>
+    )}
+  </div>
+);
+}
+
+
+
+
+
+
+
+
+
+
+
 
 // GAVE A 200 ACCEPTED STATUS BUT DIDN'T CREATE A POST. NOTHING IN BODY
 let handleCreatePost = (e)  => {
@@ -39,15 +81,64 @@ let handleCreatePost = (e)  => {
     });
 }
 
+// let needle = haystack.find((relationship) => conditions) --> found object (needle.property)
+
+// Not Working
+  // if (state.currentUser) {
+  //   let relationshipID = follow
+  //     .filter(
+  //       (relationship) =>
+  //         relationship.user === state.currentUser.user_id &&
+  //         relationship.follower === userID[0]
+  //     )
+  //     .map((follow) => follow.id);
+  // }
 
 
+// Working
+  // let relationshipID = follow
+  //   .filter(
+  //     (relationship) =>
+  //       relationship.user === state.currentUser?.user_id &&
+  //       relationship.follower === userID[0]
+  //   )
+  //   .map((follow) => follow.id);
 
 
+// Working way to show correct follow/unfollow buttons using conditional rendering &&
+{/* <Col>
+{state.currentUser?.user_id === userID[0] &&
+  navigate("/profile")}
+{!relationshipID && (
+  <Button onClick={handleFollow}>Follow</Button>
+)}
+{relationshipID && (
+  <Button onClick={handleUnfollow}>Unfollow</Button>
+)}
+</Col> */}
+
+  {/* Ternary to show follow/unfollow depending on if relationshipID exists */}
+  // <Col>
+  //   {state.currentUser?.user_id === userID[0] &&
+  //     navigate("/profile")}
+  //   {relationshipID ? (
+  //     <Button onClick={handleUnfollow}>Unfollow</Button>
+  //   ) : (
+  //     <Button onClick={handleFollow}>Follow</Button>
+  //   )}
+  // </Col>
 
 
-
-
-
+    // useEffect only runs if 'search'has 2 or more characters
+    useEffect(() => {
+      if (search.length > 1) {
+        getUserData(search).then((data) => {
+          setUsers(data);
+        });
+      }
+    }, [search]);
+    // [search] allows the useEffect to keep an eye on "search" each time it is changed
+    // and will update the return data when search is updated
 
 
 

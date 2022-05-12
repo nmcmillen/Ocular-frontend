@@ -1,57 +1,69 @@
 import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
 import "./PostLayout.css";
 import { Button, Card, Col, Image, Row } from "react-bootstrap";
-import { getData } from "../Data";
+import { getPostData } from "../Data";
 
 export default function PostLayout() {
-  const [ posts, setPosts ] = useState([]);
+  const [posts, setPosts] = useState([]);
 
-  useEffect (() => {
-    getData()
-    .then((data) => {
-      setPosts(data)
-      console.log('postlayout.js', Date.now(), data)
-      // console.log(data[3].description)
-    })
-  }, [])
+  useEffect(() => {
+    getPostData().then((data) => {
+      setPosts(data);
+      // console.log("postlayout.js", Date.now(), data);
+    });
+  }, []);
 
-  // if (posts.length > 0) { 
-  //   console.log(posts[2].description)
-  //   }
+  if (posts.length > 0) {
+    console.log(posts[2].description)
+    }
 
   return (
     <>
-    <div>
-      {posts.map(post => 
-      <Card className="mx-auto mt-4" id="post">
-        <Row className="p-0 m-2 post-header">
-          <Col className="p-0" xs={7}>
-            <Image
-              className="avatar ml-1"
-              roundedCircle
-              src={post.created_by.avatar}
+      <div>
+        {posts.map((post) => (
+          <Card key={post.id} className="mx-auto mt-4" id="post">
+            <Row className="p-0 m-2 post-header">
+              <Col className="p-0" xs={7}>
+                <Image
+                  className="avatar ml-1"
+                  roundedCircle
+                  src={post.created_by.avatar}
+                />
+                <Link
+                  to={`/userprofile/${post.created_by.username}`}
+                  style={{ color: "black", textDecoration: "none" }}
+                >
+                  <strong>{post.created_by.username}</strong>
+                </Link>
+              </Col>
+              <Col
+                className="timestamp text-muted p-0"
+                xs={{ span: 4, offset: 1 }}
+              >
+                <Card.Text>{post.created_date}</Card.Text>
+              </Col>
+            </Row>
+            <Card.Img
+              variant="top"
+              src={post.photos[0].images}
             />
-            <strong>{post.created_by.username}</strong>
-          </Col>
-          <Col
-            className="timestamp text-muted p-0"
-            xs={{span: 4, offset: 1 }}
-          >
-            <Card.Text>{post.created_date}</Card.Text>
-          </Col>
-        </Row>
-        <Card.Img
-          variant="top"
-          src={post.photos[0].images}
-          // src="https://images.unsplash.com/photo-1533418264835-9871c7c2dbf0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cmFjZWNhcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-        />
-        <Card.Body className="p-0 m-2">
-          <Card.Text className="m-0">{post.number_of_likes} likes</Card.Text>
-          <Card.Text>
-            <strong>{post.created_by.username}</strong> {post.description}
-          </Card.Text>
-        </Card.Body>
-      </Card>)}
+            <Card.Body className="p-0 m-2">
+              <Card.Text className="m-0">
+                {post.number_of_likes} likes
+              </Card.Text>
+              <Card.Text>
+                <Link
+                  to={`/userprofile/${post.created_by.username}`}
+                  style={{ color: "black", textDecoration: "none" }}
+                >
+                  <strong>{post.created_by.username}</strong>
+                </Link>{" "}
+                {(post.description).slice(2,-2)}
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        ))}
       </div>
     </>
   );
