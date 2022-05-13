@@ -149,23 +149,6 @@ export default function UserProfile() {
           >
             <Image className="profile-avatar" roundedCircle src={user.avatar} />
             <Row>
-              {/* Ternary if user exists to display buttons or not */}
-              {state.currentUser ? (
-                <Col>
-                  {/* Ternary if follow relationship exists or not to display follow/unfollow button */}
-                  {state.currentUser?.user_id === userID[0] &&
-                    navigate("/profile")}
-                  {relationshipID ? (
-                    <Button onClick={handleUnfollow}>Unfollow</Button>
-                  ) : (
-                    <Button onClick={handleFollow}>Follow</Button>
-                  )}
-                </Col>
-              ) : (
-                <></>
-              )}
-            </Row>
-            <Row>
               <h3>
                 {user.first_name} {user.last_name}
               </h3>
@@ -186,6 +169,27 @@ export default function UserProfile() {
                 {userFollowing.length} <br />
                 Following
               </Col>
+            </Row>
+            <Row>
+              {/* Ternary if user exists to display buttons or not */}
+              {state.currentUser ? (
+                <Col>
+                  {/* Ternary if follow relationship exists or not to display follow/unfollow button */}
+                  {state.currentUser?.user_id === userID[0] &&
+                    navigate("/profile")}
+                  {relationshipID ? (
+                    <div className="d-grid gap-2">
+                    <Button className='mt-1' variant='outline-secondary' size='sm' onClick={handleUnfollow}>Unfollow</Button>
+                    </div>
+                  ) : (
+                    <div className="d-grid gap-2">
+                    <Button className='mt-1' variant='outline-success' size='sm' onClick={handleFollow}>Follow</Button>
+                    </div>
+                  )}
+                </Col>
+              ) : (
+                <></>
+              )}
             </Row>
           </Container>
         ))}
