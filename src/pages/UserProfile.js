@@ -128,6 +128,9 @@ export default function UserProfile() {
     }).then((resp) => {
       console.log(resp);
     });
+    getReactionData().then((data) => {
+      setReactions(data);
+    });
     // window.location.reload(false);
     // this.forceUpdate()
   };

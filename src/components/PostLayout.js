@@ -27,7 +27,7 @@ export default function PostLayout() {
     getReactionData().then((data) => {
       setReactions(data);
     });
-  }, [reactions]);
+  }, []);
 
   // need something like this to update state when things are clicked
   // const handleChange = (key, value) => {
@@ -60,6 +60,9 @@ export default function PostLayout() {
       method: "POST",
       data: newLike,
     }).then((resp) => {
+      getReactionData().then((data) => {
+        setReactions(data);
+      });
       console.log(resp);
     });
     // window.location.reload(false);
