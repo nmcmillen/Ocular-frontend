@@ -13,15 +13,26 @@ import {
   Image,
   Row,
 } from "react-bootstrap";
-import { getFollowerData, getPostData, getUserData } from "../Data";
+import {
+  getFollowerData,
+  getPostData,
+  getUserData,
+  getReactionData,
+} from "../Data";
 import "./UserProfile.css";
 import request from "../components/services/api.request";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+// import { faCoffee } from '@fortawesome/free-regular-svg-icons'
+import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
 export default function UserProfile() {
   const [state, dispatch] = useGlobalState();
   const [posts, setPosts] = useState([]);
   const [profile, setProfile] = useState([]);
   const [follow, setFollow] = useState([]);
+  const [reactions, setReactions] = useState([]);
 
   let { username } = useParams();
   let navigate = useNavigate();
@@ -36,6 +47,9 @@ export default function UserProfile() {
     getFollowerData().then((data) => {
       setFollow(data);
       // setFollow(data.filter((user) => user.id === user.id));
+    });
+    getReactionData().then((data) => {
+      setReactions(data);
     });
   }, []);
 
@@ -105,6 +119,22 @@ export default function UserProfile() {
     // this.forceUpdate()
   };
 
+  // ### LIKE A POST ###
+  let handleLike = async (postID) => {
+    const newLike = new FormData();
+    newLike.append("user", state.currentUser.user_id);
+    newLike.append("post", postID);
+    let resp = await request({
+      url: `api/postreactions/`,
+      method: "POST",
+      data: newLike,
+    }).then((resp) => {
+      console.log(resp);
+    });
+    // window.location.reload(false);
+    // this.forceUpdate()
+  };
+
   // look up optional chaining
 
   return (
@@ -112,7 +142,11 @@ export default function UserProfile() {
       <HomeNavbar />
       <div>
         {userProfile.map((user) => (
-          <Container fluid key={user.id} className="profile-page text-center mt-3">
+          <Container
+            fluid
+            key={user.id}
+            className="profile-page text-center mt-3"
+          >
             <Image className="profile-avatar" roundedCircle src={user.avatar} />
             <Row>
               {/* Ternary if user exists to display buttons or not */}
@@ -187,13 +221,44 @@ export default function UserProfile() {
                 <Col>
                   {" "}
                   <Card.Text className="m-0">
-                    {post.number_of_likes} likes
+                    {/* if like relationship exist or not, display correct button */}
+                    {/* Ternary if user exists to display buttons or not */}
+                    {state.currentUser ? (
+                      <>
+                        {/* Ternary if follow relationship exists or not to display follow/unfollow button */}
+                        {reactions.find(
+                          (reaction) =>
+                            reaction.user === state.currentUser?.user_id &&
+                            reaction.post === post.id
+                        ) ? (
+                          <button className="unlike-button">
+                            <FontAwesomeIcon icon={faHeart} />
+                          </button>
+                        ) : (
+                          <button
+                            className="like-button"
+                            onClick={() => handleLike(post.id)}
+                          >
+                            <FontAwesomeIcon icon={farHeart} />
+                          </button>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <button className="like-button">
+                          <FontAwesomeIcon icon={farHeart} />
+                        </button>
+                      </>
+                    )}
+                    {reactions.filter((likes) => likes.post === post.id).length}{" "}
+                    likes
                   </Card.Text>
                 </Col>
               </Row>
 
               <Card.Text>
-                <strong>{post.created_by.username}</strong> {(post.description).slice(2,-2)}
+                <strong>{post.created_by.username}</strong>{" "}
+                {post.description.slice(2, -2)}
               </Card.Text>
             </Card.Body>
           </Card>

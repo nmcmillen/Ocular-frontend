@@ -1,3 +1,81 @@
+
+              {/* Ternary if user exists to display buttons or not */}
+              {state.currentUser ? (
+                <>
+                  {/* Ternary if follow relationship exists or not to display follow/unfollow button */}
+                  {reactions.find(
+                  (reaction) =>
+                    reaction.user === state.currentUser?.user_id &&
+                    reaction.post === post.id
+                ) ? (
+                  <button className="unlike-button">
+                    <FontAwesomeIcon icon={faHeart} />
+                  </button>
+                ) : (
+                  <button
+                    className="like-button"
+                    onClick={() => handleLike(post.id)}
+                  >
+                    <FontAwesomeIcon icon={farHeart} />
+                  </button>
+                )}
+                </>
+              ) : (
+                <>
+                <button className="unlike-button">
+                    <FontAwesomeIcon icon={faHeart} />
+                  </button></>
+              )}
+
+
+// {reactions.find(
+//   (reaction) =>
+//     reaction.user === state.currentUser?.user_id &&
+//     reaction.post === post.id) && <button>unlike</button>}
+
+// {state.currentUser ? (
+
+//   ) : (
+
+//   )}
+
+// {reactions.find(
+//   (reaction) =>
+//     reaction.user === state.currentUser?.user_id &&
+//     reaction.post === post.id
+// ) ? (
+//   <button className="unlike-button">
+//     <FontAwesomeIcon icon={faHeart} />
+//   </button>
+// ) : (
+//   <button
+//     className="like-button"
+//     onClick={() => handleLike(post.id)}
+//   >
+//     <FontAwesomeIcon icon={farHeart} />
+//   </button>
+// )}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 return (
   <div className="search">
     <div className="searchInputs">
