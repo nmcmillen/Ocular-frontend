@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { GlobalProvider } from "./context/GlobalState";
 import HomeSignedIn from "./pages/HomeSignedIn";
 import HomePage from "./pages/HomePage";
