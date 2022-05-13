@@ -42,11 +42,10 @@ export default function EditAvatar() {
   return (
     <>
       <Button
-        className="text-white shadow-none"
-        variant="primary"
+        className='m-1' variant='outline-secondary' size='sm'
         onClick={handleShow}
       >
-        Update avatar
+        Update Avatar
       </Button>
 
       <Modal centered show={show} onHide={handleClose}>

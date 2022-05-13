@@ -20,10 +20,22 @@ export default function PostLayout() {
     getPostData().then((data) => {
       setPosts(data);
     });
+  }, []);
+
+  // Pulls reaction data. When like is made, watches and rerenders.
+  useEffect(() => {
     getReactionData().then((data) => {
       setReactions(data);
     });
-  }, []);
+  }, [reactions]);
+
+  // need something like this to update state when things are clicked
+  // const handleChange = (key, value) => {
+  //   setUser({
+  //     ...user,
+  //     [key]: value,
+  //   });
+  // };
 
   // check if signed in user has already liked the post (pulling correctly if user signed in)
   // let reactionID = reactions.filter(
@@ -51,7 +63,6 @@ export default function PostLayout() {
       console.log(resp);
     });
     // window.location.reload(false);
-    // this.forceUpdate()
   };
 
   // ### UNFOLLOW ###

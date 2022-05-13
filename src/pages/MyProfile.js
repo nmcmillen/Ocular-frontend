@@ -78,14 +78,6 @@ export default function MyProfile() {
         <Container key={user.id} fluid className="profile-page text-center mt-3">
           <Image className="profile-avatar" roundedCircle src={user.avatar} />
           <Row>
-            <Col>
-              {/* <Button>Edit Profile</Button> */}
-              {/* <Button>Edit Avatar</Button> */}
-              <EditProfile />
-              <EditAvatar />
-            </Col>
-          </Row>
-          <Row>
             <h3>
               {user.first_name} {user.last_name}
             </h3>
@@ -105,6 +97,14 @@ export default function MyProfile() {
             <Col>
             {userFollowing.length} <br />
               Following
+            </Col>
+          </Row>
+          <Row className="m-0 mt-1">
+            <Col>
+              {/* <Button>Edit Profile</Button> */}
+              {/* <Button>Edit Avatar</Button> */}
+              <EditProfile />
+              <EditAvatar />
             </Col>
           </Row>
         </Container>

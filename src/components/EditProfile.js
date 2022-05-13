@@ -56,8 +56,7 @@ export default function EditProfile() {
   return (
     <>
       <Button
-        className="text-white shadow-none"
-        variant="primary"
+        className='m-1' variant='outline-secondary' size='sm'
         onClick={handleShow}
       >
         Update Profile
