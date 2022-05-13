@@ -1,12 +1,8 @@
 import "./App.css";
 import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
-// import HomeNavbar from "./components/HomeNavbar";
-// import PostLayout from './components/PostLayout';
-// import NavBar from './components/NavBar';
 import { GlobalProvider } from "./context/GlobalState";
 import HomeSignedIn from "./pages/HomeSignedIn";
 import HomePage from "./pages/HomePage";
-// import Profile from "./components/user/Profile";
 import MyProfile from "./pages/MyProfile";
 import UserProfile from "./pages/UserProfile";
 
@@ -19,7 +15,6 @@ function App() {
           <Route path='/' element={<HomePage />} />
           <Route path="feed" element={<HomeSignedIn />} />
           <Route path='profile' element= {<MyProfile />} />
-          {/* <Route path='userprofile' element= {<UserProfile />} /> */}
           <Route path='userprofile/:username' element= {<UserProfile />} />
         </Routes>
       </BrowserRouter>
@@ -28,9 +23,3 @@ function App() {
 }
 
 export default App;
-
-
-// <HomeNavbar />
-// <PostLayout />
-// <NavBar />
-// <Outlet />

@@ -6,6 +6,11 @@ import { Button, Card, Col, Image, Row } from "react-bootstrap";
 import { getPostData, getReactionData } from "../Data";
 import request from "../components/services/api.request";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
+// import { faCoffee } from '@fortawesome/free-regular-svg-icons'
+import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons'
+
 export default function PostLayout() {
   const [state, dispatch] = useGlobalState();
   const [posts, setPosts] = useState([]);
@@ -35,7 +40,6 @@ export default function PostLayout() {
   //     reaction.follower === userID[0])
 
   let handleLike = async (postID) => {
-    // console.log('post', postID)
     const newLike = new FormData();
     newLike.append("user", state.currentUser.user_id);
     newLike.append("post", postID);
@@ -92,6 +96,16 @@ export default function PostLayout() {
             <Card.Img variant="top" src={post.photos[0].images} />
             <Card.Body className="p-0 m-2">
               <Card.Text className="m-0">
+                {/* if like relationship exist or not, display correct button */}
+                {reactions.find(
+                  (reaction) =>
+                    reaction.user === state.currentUser?.user_id &&
+                    reaction.post === post.id
+                ) ? (
+                  <button className='unlike-button'><FontAwesomeIcon icon={faHeart} /></button>
+                ) : (
+                  <button className='like-button' onClick={() => handleLike(post.id)}><FontAwesomeIcon icon={farHeart} /></button>
+                )}
                 {/* gets the number of likes on specific post */}
                 {
                   reactions.filter((likes) => likes.post === post.id).length
@@ -99,16 +113,6 @@ export default function PostLayout() {
                 likes
               </Card.Text>
 
-              {/* if like relationship exist or not, display correct button */}
-              {reactions.find(
-                (reaction) =>
-                  reaction.user === state.currentUser?.user_id &&
-                  reaction.post === post.id
-              ) ? (
-                <Button>Unlike</Button>
-              ) : (
-                <Button onClick={() => handleLike(post.id)}>Like</Button>
-              )}
 
               <Card.Text>
                 <Link

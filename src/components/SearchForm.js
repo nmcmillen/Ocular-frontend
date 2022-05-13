@@ -26,9 +26,6 @@ export default function SearchForm() {
   // [search] allows the useEffect to keep an eye on "search" each time it is changed
   // and will update the return data when search is updated
 
-  console.log("users", users);
-  console.log("search", search);
-
   return (
     <>
       <div className="search-box">

@@ -77,8 +77,6 @@ export default function UserProfile() {
   )?.id;
   // look up .find
 
-  console.log(relationshipID);
-
   // ### FOLLOW ###
   let handleFollow = async () => {
     const newFollower = new FormData();

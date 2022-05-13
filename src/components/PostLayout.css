@@ -22,3 +22,15 @@ img {
 .post-header {
     align-items: center;
 }
+
+.unlike-button {
+    background: none;
+    border: none;
+    color: red;
+}
+
+.like-button {
+    background: none;
+    border: none;
+    color: black;
+}
