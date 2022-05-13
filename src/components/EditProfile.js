@@ -2,24 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { useGlobalState } from "../context/GlobalState";
 import request from "./services/api.request";
-import { getPostData, getUserData } from "../Data";
+import { getUserData } from "../Data";
 
 export default function EditProfile() {
+  const [state, dispatch] = useGlobalState();
   const [show, setShow] = useState(false);
+  const [profile, setProfile] = useState([]);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [profile, setProfile] = useState([]);
-
-  useEffect(() => {
-    getUserData().then((data) => {
-      setProfile(data.filter((user) => user.id === state.currentUser.user_id));
-    });
-  }, []);
-
-  let userProfile = profile;
-
-  const [state, dispatch] = useGlobalState();
   const [updateProfile, setUpdateProfile] = useState({
     first_name: state.person.first_name,
     last_name: state.person.last_name,
@@ -27,6 +18,16 @@ export default function EditProfile() {
     bio: state.person.bio,
   });
 
+  
+  let userProfile = profile;
+  
+  useEffect(() => {
+    getUserData().then((data) => {
+      setProfile(data.filter((user) => user.id === state.currentUser.user_id));
+    });
+  }, []);
+  
+  
   // handles the updates to create post modal from the text form and image/file upload
   const handleChange = (key, value) => {
     setUpdateProfile({
@@ -43,13 +44,14 @@ export default function EditProfile() {
     newUpdateProfile.append("username", updateProfile.username);
     newUpdateProfile.append("bio", updateProfile.bio);
     // request comes from api.request.js
-    let resp = await request({
+    await request({
       url: `api/users/${state.currentUser.user_id}/`,
       method: "PATCH",
       data: newUpdateProfile,
     }).then((resp) => {
       console.log(resp);
     });
+    handleClose()
     window.location.reload(false);
   };
 

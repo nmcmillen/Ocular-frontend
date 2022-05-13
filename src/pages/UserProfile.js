@@ -4,12 +4,9 @@ import { useGlobalState } from "../context/GlobalState";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   Button,
-  ButtonGroup,
   Card,
   Col,
   Container,
-  Dropdown,
-  DropdownButton,
   Image,
   Row,
 } from "react-bootstrap";
@@ -96,7 +93,7 @@ export default function UserProfile() {
     const newFollower = new FormData();
     newFollower.append("user", state.currentUser.user_id);
     newFollower.append("follower", userID[0]);
-    let resp = await request({
+    await request({
       url: `api/followers/`,
       method: "POST",
       data: newFollower,
@@ -109,7 +106,7 @@ export default function UserProfile() {
 
   // ### UNFOLLOW ###
   let handleUnfollow = async () => {
-    let resp = await request({
+    await request({
       url: `api/followers/${relationshipID}/`,
       method: "DELETE",
     }).then((resp) => {
@@ -124,12 +121,15 @@ export default function UserProfile() {
     const newLike = new FormData();
     newLike.append("user", state.currentUser.user_id);
     newLike.append("post", postID);
-    let resp = await request({
+    await request({
       url: `api/postreactions/`,
       method: "POST",
       data: newLike,
     }).then((resp) => {
       console.log(resp);
+    });
+    getReactionData().then((data) => {
+      setReactions(data);
     });
     // window.location.reload(false);
     // this.forceUpdate()

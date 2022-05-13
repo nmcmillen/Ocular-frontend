@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useGlobalState } from "../context/GlobalState";
 import "./PostLayout.css";
-import { Button, Card, Col, Image, Row } from "react-bootstrap";
+import { Card, Col, Image, Row } from "react-bootstrap";
 import { getPostData, getReactionData } from "../Data";
 import request from "../components/services/api.request";
 
@@ -27,7 +27,7 @@ export default function PostLayout() {
     getReactionData().then((data) => {
       setReactions(data);
     });
-  }, [reactions]);
+  }, []);
 
   // need something like this to update state when things are clicked
   // const handleChange = (key, value) => {
@@ -55,11 +55,14 @@ export default function PostLayout() {
     const newLike = new FormData();
     newLike.append("user", state.currentUser.user_id);
     newLike.append("post", postID);
-    let resp = await request({
+    await request({
       url: `api/postreactions/`,
       method: "POST",
       data: newLike,
     }).then((resp) => {
+      getReactionData().then((data) => {
+        setReactions(data);
+      });
       console.log(resp);
     });
     // window.location.reload(false);

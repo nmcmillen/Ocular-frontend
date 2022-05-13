@@ -1,8 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { getUserData } from "../Data";
-import { useNavigate, useParams, Link } from "react-router-dom";
-import { Button, Card, Col, Image, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { Col, Image, Row } from "react-bootstrap";
 import "./SearchForm.css";
 
 export default function SearchForm() {

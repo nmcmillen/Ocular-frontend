@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import HomeNavbar from "../components/HomeNavbar";
 import { useGlobalState } from "../context/GlobalState";
 import {
-  Button,
-  ButtonGroup,
   Card,
   Col,
   Container,
@@ -62,7 +60,7 @@ export default function MyProfile() {
 
   let handleDeletePost = async (id) => {
     console.log("define clicked post", id);
-    let resp = await request({
+    await request({
       url: `api/posts/${id}`,
       method: "DELETE",
     }).then((resp) => {
