@@ -4,7 +4,6 @@ import AuthService from "././services/auth.service";
 import { useNavigate } from "react-router-dom";
 import { useGlobalState } from ".././context/GlobalState";
 import jwtDecode from "jwt-decode";
-// new to get user data
 import request from "./services/api.request"; 
 
 export default function LoginModal() {
