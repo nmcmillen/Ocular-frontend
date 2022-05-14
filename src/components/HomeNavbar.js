@@ -68,7 +68,7 @@ export default function HomeNavbar() {
                     to="/profile"
                     style={{ marginLeft: '.5em', color: "white", textDecoration: "none" }}
                   >
-                    Hello, {state.person.first_name}
+                    Hello, {state.person?.first_name}
                   </Link>
                 </>
               )}

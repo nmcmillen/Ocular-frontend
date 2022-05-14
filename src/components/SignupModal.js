@@ -32,8 +32,10 @@ export default function SignupModal() {
   const handleRegister = (e) => {
     e.preventDefault();
     AuthService.register(user);
+    handleClose()
+    alert('Account created successfully. Please Login')
+    localStorage.clear(); //look to make this work and direct to users profile on succesful account creation
     // navigate('/profile') //need to navigate to profile but having issue with signup
-    console.log('Account created successfully') //look to make this work and direct to users profile on succesful account creation
   };
 
   return (
