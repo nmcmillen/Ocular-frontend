@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useGlobalState } from "../context/GlobalState";
 import "./PostLayout.css";
 import { Card, Col, Image, Row } from "react-bootstrap";
-import { getPostData, getReactionData } from "../Data";
+import { getPostData, getReactionData, getFollowerData } from "../Data";
 import request from "../components/services/api.request";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,6 +15,38 @@ export default function PostLayout() {
   const [state, dispatch] = useGlobalState();
   const [posts, setPosts] = useState([]);
   const [reactions, setReactions] = useState([]);
+  
+  const [follow, setFollow] = useState([])
+  const [followingPosts, setFollowingPosts] = useState([]);
+
+  useEffect(() => {
+    getFollowerData().then((data) => {
+      setFollow(data.filter(
+        (displayFollowing) => displayFollowing.user === state.currentUser.user_id));
+    });
+  }, []);
+  
+  let followOnly = follow.map((fans) => fans.follower)
+
+  // followOnly returns [3,4,8,9]
+  
+  useEffect(() => {
+    getPostData().then((data) => {
+      setFollowingPosts(data.filter(
+        (posts) => posts.created_by.id === followOnly.every()));
+        // (posts) => posts.created_by.id === 4)); ### This line returns the posts needed but only one user
+    });
+  }, []);
+
+  console.log('postinfo', posts)
+
+  
+
+  console.log('following', followOnly[0])
+  console.log('follow posts', followingPosts)
+
+  // only display posts that have the same user id as the user id's that I follow 
+
 
   useEffect(() => {
     getPostData().then((data) => {
