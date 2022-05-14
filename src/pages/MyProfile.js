@@ -24,12 +24,11 @@ export default function MyProfile() {
 
   useEffect(() => {
     getUserData().then((data) => {
-      setProfile(data);
-      // setProfile(data.filter((user) => user.id === state.currentUser.user_id)); //might use this instead
+      // setProfile(data);
+      setProfile(data.filter((user) => user.id === state.currentUser.user_id)); //might use this instead
     });
     getFollowerData().then((data) => {
       setFollow(data);
-      // setFollowers(data.filter((user) => user.id === user.id));
     });
   }, []);
 
