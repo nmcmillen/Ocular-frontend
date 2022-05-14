@@ -10,9 +10,9 @@ export default function SearchForm() {
   const [users, setUsers] = useState("");
 
   function handleSubmit() {
-    // e.preventDefault();
     // alert("form submitted");
     setSearch("");
+    setUsers("");
   }
 
   // useEffect only runs if 'search'has 2 or more characters
