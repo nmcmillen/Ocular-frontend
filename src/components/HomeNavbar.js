@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Container, Nav } from "react-bootstrap";
+import { Container, Image, Navbar, NavDropdown, Nav } from "react-bootstrap";
 import CreatePost from "./CreatePost";
 import logo from "./images/ocular-logo.png";
 import LoginModal from "./LoginModal";
@@ -7,7 +7,8 @@ import SearchForm from "./SearchForm";
 import SignupModal from "./SignupModal";
 import { Link } from "react-router-dom";
 import { useGlobalState } from "../context/GlobalState";
-
+import { useNavigate } from "react-router-dom";
+import "./HomeNavbar.css";
 // Maybe need a Link Container bootstrap???
 
 export default function HomeNavbar() {
@@ -15,10 +16,22 @@ export default function HomeNavbar() {
   // let user = JSON.parse(localStorage.getItem("user"));
   // console.log(user);
 
+  let navigate = useNavigate();
+
   function logout() {
     localStorage.clear();
-    this.forceUpdate();
+    navigate('/')
+    window.location.reload(true)
   }
+
+  const UserAvatar = (
+    <Image
+      src={state.person?.avatar}
+      alt="User profile image"
+      roundedCircle
+      style={{ width: '30px' }}
+    />
+  )
 
   return (
     <div>
@@ -56,20 +69,14 @@ export default function HomeNavbar() {
               {state.currentUser && (
                 <>
                   <CreatePost />
-
-                  <Link
-                    onClick={logout}
-                    to="/"
-                    style={{ color: "white", textDecoration: "none" }}
-                  >
-                    Logout
-                  </Link>
-                  <Link
-                    to="/profile"
-                    style={{ marginLeft: '.5em', color: "white", textDecoration: "none" }}
-                  >
-                    Hello, {state.person?.first_name}
-                  </Link>
+                  <NavDropdown align='end' title={UserAvatar} id="basic-nav-dropdown" style={{ border: 'none' }}>
+                    <NavDropdown.Item onClick={() => navigate("/profile")}>
+                      My Profile
+                    </NavDropdown.Item>
+                    <NavDropdown.Item onClick={logout}>
+                      Logout
+                    </NavDropdown.Item>
+                  </NavDropdown>
                 </>
               )}
             </Navbar.Collapse>
