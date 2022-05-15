@@ -36,7 +36,7 @@ export default function LoginModal() {
       // set person to local storage so it saves there
       localStorage.setItem('person',JSON.stringify(person))
       // navigate("/profile");
-      window.location.reload(false)
+      window.location.reload(true)
     });
   };
 
