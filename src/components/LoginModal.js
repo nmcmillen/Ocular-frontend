@@ -35,7 +35,8 @@ export default function LoginModal() {
       });
       // set person to local storage so it saves there
       localStorage.setItem('person',JSON.stringify(person))
-      navigate("/feed");
+      // navigate("/profile");
+      window.location.reload(false)
     });
   };
 
@@ -68,7 +69,6 @@ export default function LoginModal() {
               <Form.Control
                 type="text"
                 placeholder="user.ocular"
-                // id="username"
                 name="username"
                 onChange={(e) => setUsername(e.target.value)}
                 // onSubmit={handleLogin}
@@ -80,7 +80,6 @@ export default function LoginModal() {
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
-                // id="pass"
                 name="password"
                 minLength="8"
                 onChange={(e) => setPassword(e.target.value)}
