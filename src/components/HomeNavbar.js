@@ -9,7 +9,6 @@ import {
   Nav,
   Row,
 } from "react-bootstrap";
-import CreatePost from "./CreatePost";
 import logo from "./images/ocular-logo.png";
 import LoginModal from "./LoginModal";
 import SearchForm from "./SearchForm";
@@ -18,6 +17,9 @@ import { Link } from "react-router-dom";
 import { useGlobalState } from "../context/GlobalState";
 import { useNavigate } from "react-router-dom";
 import "./HomeNavbar.css";
+import CreatePost from "./CreatePost";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faList, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 export default function HomeNavbar() {
   const [state, dispatch] = useGlobalState();
@@ -89,8 +91,36 @@ export default function HomeNavbar() {
             )}
             {state.currentUser && (
               <Col className="d-flex justify-content-center">
-                {/* <CreatePost /> */}
-                <NavDropdown
+                <CreatePost />
+                <Button
+                  className="text-white shadow-none m-0 p-0"
+                  variant=""
+                  onClick={() => navigate("/feed")}
+                >
+                  <FontAwesomeIcon
+                    style={{ marginRight: "1rem" }}
+                    icon={faList}
+                  />
+                </Button>
+                <Button
+                  className="text-white shadow-none m-0 p-0"
+                  variant=""
+                  onClick={logout}
+                >
+                  <FontAwesomeIcon
+                    style={{ marginRight: "1rem" }}
+                    icon={faRightFromBracket}
+                  />
+                </Button>
+                <Button
+                  className="shadow-none m-0 p-0"
+                  variant=""
+                  onClick={() => navigate("/profile")}
+                >
+                  {UserAvatar}
+                </Button>
+
+                {/* <NavDropdown
                   align="end"
                   title={UserAvatar}
                   id="basic-nav-dropdown"
@@ -102,11 +132,8 @@ export default function HomeNavbar() {
                   <NavDropdown.Item onClick={() => navigate("/feed")}>
                     Feed
                   </NavDropdown.Item>
-                  <NavDropdown.Item>
-                    <CreatePost />
-                  </NavDropdown.Item>
                   <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
-                </NavDropdown>
+                </NavDropdown> */}
               </Col>
             )}
             {/* </Navbar.Collapse> */}

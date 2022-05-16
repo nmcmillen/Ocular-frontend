@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { useGlobalState } from "../context/GlobalState";
 import request from "./services/api.request";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
+
 
 export default function CreatePost() {
   const [show, setShow] = useState(false);
@@ -33,7 +36,7 @@ export default function CreatePost() {
     newPost.append("description", post.description);
     newPost.append("image", post.image);
     // request comes from api.request.js
-    let resp = await request({
+    await request({
       url: "api/posts/",
       method: "POST",
       data: newPost,
@@ -46,12 +49,12 @@ export default function CreatePost() {
   return (
     <>
       <Button
-        className="text-black shadow-none m-0 p-0"
+        className="text-white shadow-none m-0 p-0"
         variant=""
         onClick={handleShow}
-        // style={{padding: '5px'}}
+        
       >
-        Create Post
+        <FontAwesomeIcon style={{marginRight: '1rem'}} icon={faCamera} />
       </Button>
 
       <Modal centered show={show} onHide={handleClose}>
