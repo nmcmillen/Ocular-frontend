@@ -18,10 +18,8 @@ import {
 } from "../Data";
 import "./UserProfile.css";
 import request from "../components/services/api.request";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
-// import { faCoffee } from '@fortawesome/free-regular-svg-icons'
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
 export default function UserProfile() {
@@ -101,7 +99,6 @@ export default function UserProfile() {
       console.log(resp);
     });
     window.location.reload(false);
-    // this.forceUpdate()
   };
 
   // ### UNFOLLOW ###
@@ -113,7 +110,6 @@ export default function UserProfile() {
       console.log(resp);
     });
     window.location.reload(false);
-    // this.forceUpdate()
   };
 
   // ### LIKE A POST ###
@@ -131,8 +127,6 @@ export default function UserProfile() {
     getReactionData().then((data) => {
       setReactions(data);
     });
-    // window.location.reload(false);
-    // this.forceUpdate()
   };
 
   // look up optional chaining

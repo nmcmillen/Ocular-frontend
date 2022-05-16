@@ -10,25 +10,36 @@ import {
   Image,
   Row,
 } from "react-bootstrap";
-import { getFollowerData, getPostData, getUserData } from "../Data";
+import {
+  getFollowerData,
+  getPostData,
+  getUserData,
+  getReactionData,
+} from "../Data";
 import "./MyProfile.css";
 import request from "../components/services/api.request";
 import EditAvatar from "../components/EditAvatar";
 import EditProfile from "../components/EditProfile";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
 export default function MyProfile() {
   const [state, dispatch] = useGlobalState();
   const [posts, setPosts] = useState([]);
   const [profile, setProfile] = useState([]);
-  const [follow, setFollow] = useState([])
+  const [follow, setFollow] = useState([]);
+  const [reactions, setReactions] = useState([]);
 
   useEffect(() => {
     getUserData().then((data) => {
-      // setProfile(data);
-      setProfile(data.filter((user) => user.id === state.currentUser.user_id)); //might use this instead
+      setProfile(data.filter((user) => user.id === state.currentUser.user_id));
     });
     getFollowerData().then((data) => {
       setFollow(data);
+    });
+    getReactionData().then((data) => {
+      setReactions(data);
     });
   }, []);
 
@@ -58,7 +69,8 @@ export default function MyProfile() {
 
   // ### Displays the current page user's followers ###
   let userFollowers = follow.filter(
-    (displayFollowers) => displayFollowers.follower === state.currentUser.user_id
+    (displayFollowers) =>
+      displayFollowers.follower === state.currentUser.user_id
   );
 
   let handleDeletePost = async (id) => {
@@ -72,11 +84,32 @@ export default function MyProfile() {
     window.location.reload(false);
   };
 
+  // ### LIKE A POST ###
+  let handleLike = async (postID) => {
+    const newLike = new FormData();
+    newLike.append("user", state.currentUser.user_id);
+    newLike.append("post", postID);
+    await request({
+      url: `api/postreactions/`,
+      method: "POST",
+      data: newLike,
+    }).then((resp) => {
+      console.log(resp);
+    });
+    getReactionData().then((data) => {
+      setReactions(data);
+    });
+  };
+
   return (
     <>
       <HomeNavbar />
       {userProfile.map((user) => (
-        <Container key={user.id} fluid className="profile-page text-center mt-3">
+        <Container
+          key={user.id}
+          fluid
+          className="profile-page text-center mt-3"
+        >
           <Image className="profile-avatar" roundedCircle src={user.avatar} />
           <Row>
             <h4>
@@ -92,11 +125,11 @@ export default function MyProfile() {
               Posts
             </Col>
             <Col>
-            {userFollowers.length} <br />
+              {userFollowers.length} <br />
               Followers
             </Col>
             <Col>
-            {userFollowing.length} <br />
+              {userFollowing.length} <br />
               Following
             </Col>
           </Row>
@@ -139,7 +172,37 @@ export default function MyProfile() {
                 <Col>
                   {" "}
                   <Card.Text className="m-0">
-                    {post.number_of_likes} likes
+                    {/* if like relationship exist or not, display correct button */}
+                    {/* Ternary if user exists to display buttons or not */}
+                    {state.currentUser ? (
+                      <>
+                        {/* Ternary if follow relationship exists or not to display follow/unfollow button */}
+                        {reactions.find(
+                          (reaction) =>
+                            reaction.user === state.currentUser?.user_id &&
+                            reaction.post === post.id
+                        ) ? (
+                          <button className="unlike-button">
+                            <FontAwesomeIcon icon={faHeart} />
+                          </button>
+                        ) : (
+                          <button
+                            className="like-button"
+                            onClick={() => handleLike(post.id)}
+                          >
+                            <FontAwesomeIcon icon={farHeart} />
+                          </button>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <button className="like-button">
+                          <FontAwesomeIcon icon={farHeart} />
+                        </button>
+                      </>
+                    )}
+                    {reactions.filter((likes) => likes.post === post.id).length}{" "}
+                    likes
                   </Card.Text>
                 </Col>
                 <Col className="d-flex justify-content-end">
@@ -158,7 +221,8 @@ export default function MyProfile() {
               </Row>
 
               <Card.Text>
-                <strong>{post.created_by.username}</strong> {(post.description).slice(2,-2)}
+                <strong>{post.created_by.username}</strong>{" "}
+                {post.description.slice(2, -2)}
               </Card.Text>
             </Card.Body>
           </Card>
