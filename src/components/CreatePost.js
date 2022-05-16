@@ -46,10 +46,10 @@ export default function CreatePost() {
   return (
     <>
       <Button
-        className="text-white shadow-none"
+        className="text-black shadow-none m-0 p-0"
         variant=""
         onClick={handleShow}
-        style={{padding: '5px'}}
+        // style={{padding: '5px'}}
       >
         Create Post
       </Button>

@@ -1,10 +1,10 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { GlobalProvider } from "./context/GlobalState";
-import HomeSignedIn from "./pages/HomeSignedIn";
 import HomePage from "./pages/HomePage";
 import MyProfile from "./pages/MyProfile";
 import UserProfile from "./pages/UserProfile";
+import Feed from "./pages/Feed";
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
         <Routes>
           {/* <Route path="/" element={<App />} /> */}
           <Route path='/' element={<HomePage />} />
-          <Route path="feed" element={<HomeSignedIn />} />
+          <Route path="feed" element={<Feed />} />
           <Route path='profile' element= {<MyProfile />} />
           <Route path='userprofile/:username' element= {<UserProfile />} />
         </Routes>

@@ -2,10 +2,12 @@ import React from "react";
 import {
   Button,
   Container,
+  Col,
   Image,
   Navbar,
   NavDropdown,
   Nav,
+  Row,
 } from "react-bootstrap";
 import CreatePost from "./CreatePost";
 import logo from "./images/ocular-logo.png";
@@ -39,10 +41,21 @@ export default function HomeNavbar() {
     />
   );
 
+  const Feed = (
+    <Button
+      className="text-white"
+      style={{ padding: "5px" }}
+      variant=""
+      onClick={() => navigate("/feed")}
+    >
+      Feed
+    </Button>
+  );
+
   return (
-    <div>
-      <Navbar bg="dark" variant="dark" expand="lg">
-        <Container>
+    <Navbar bg="dark" variant="dark" expand="lg">
+      <Container>
+        <Col className="d-flex justify-content-center">
           <Link to="/" style={{ textDecoration: "none" }}>
             <Navbar.Brand>
               <img
@@ -50,53 +63,56 @@ export default function HomeNavbar() {
                 src={logo}
                 width="30"
                 height="30"
-                className="d-inline-block align-top"
+                className="d-inline-block"
               />{" "}
-              Ocular
+              <strong>OCULAR</strong>
             </Navbar.Brand>
           </Link>
+        </Col>
+        <Col className="d-flex justify-content-center">
           <SearchForm />
+        </Col>
+        <Col className=" mx-auto">
           <Nav className="d-flex">
             {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" /> */}
             {/* <Navbar.Collapse
               className="justify-content-end"
               id="responsive-navbar-nav"
             > */}
-              {/* MENU LINKS */}
-              <Button
-                className="text-white"
-                style={{ padding: "5px" }}
-                variant=""
-                onClick={() => navigate("/feed")}
-              >
-                Feed
-              </Button>
-              {!state.currentUser && (
-                <>
-                  <LoginModal />
-                  <SignupModal />
-                </>
-              )}
-              {state.currentUser && (
-                <>
-                  <CreatePost />
-                  <NavDropdown
-                    align="end"
-                    title={UserAvatar}
-                    id="basic-nav-dropdown"
-                    style={{ border: "none" }}
-                  >
-                    <NavDropdown.Item onClick={() => navigate("/profile")}>
-                      My Profile
-                    </NavDropdown.Item>
-                    <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
-                  </NavDropdown>
-                </>
-              )}
+            {/* MENU LINKS */}
+            {!state.currentUser && (
+              <Col className="d-flex justify-content-center">
+                {Feed}
+                <LoginModal />
+                <SignupModal />
+              </Col>
+            )}
+            {state.currentUser && (
+              <Col className="d-flex justify-content-center">
+                {/* <CreatePost /> */}
+                <NavDropdown
+                  align="end"
+                  title={UserAvatar}
+                  id="basic-nav-dropdown"
+                  style={{ border: "none" }}
+                >
+                  <NavDropdown.Item onClick={() => navigate("/profile")}>
+                    My Profile
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => navigate("/feed")}>
+                    Feed
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <CreatePost />
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
+                </NavDropdown>
+              </Col>
+            )}
             {/* </Navbar.Collapse> */}
           </Nav>
-        </Container>
-      </Navbar>
-    </div>
+        </Col>
+      </Container>
+    </Navbar>
   );
 }

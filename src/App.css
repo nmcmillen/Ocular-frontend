@@ -3,9 +3,10 @@
   background-color: #09ff00
 }
 
-/* body {
-  background: #ff7a7a;
-} */
+body, html { 
+  font-family: 'Vazir', sans-serif;
+  overflow-x: hidden;
+}
 
 .App-logo {
   height: 40vmin;

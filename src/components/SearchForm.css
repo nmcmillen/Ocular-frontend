@@ -6,6 +6,12 @@
   width: 300px;
 }
 
+@media only screen and (max-width: 768px) {
+  .search-input {
+    width: 225px;
+  }
+}
+
 .dataResult {
   margin-top: 5px;
   width: 300px;

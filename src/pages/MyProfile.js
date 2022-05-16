@@ -79,9 +79,9 @@ export default function MyProfile() {
         <Container key={user.id} fluid className="profile-page text-center mt-3">
           <Image className="profile-avatar" roundedCircle src={user.avatar} />
           <Row>
-            <h3>
+            <h4>
               {user.first_name} {user.last_name}
-            </h3>
+            </h4>
           </Row>
           <Row>
             <h6>{user.bio}</h6>
@@ -151,7 +151,7 @@ export default function MyProfile() {
                     title=""
                   >
                     <Dropdown.Item onClick={() => handleDeletePost(post.id)}>
-                      Delete Post {post.id}
+                      Delete Post
                     </Dropdown.Item>
                   </DropdownButton>
                 </Col>
