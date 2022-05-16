@@ -1,3 +1,76 @@
+// Justin's Navbar
+<Navbar bg="dark" variant="dark" expand="lg">
+        <Container>
+          <div class="row">
+          <div class="col-4">
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <Navbar.Brand>
+              <div class="row">
+                <div class="col-4">
+                <img
+                alt=""
+                alignMiddle
+                src={logo}
+                width="30"
+                height="30"
+                className="d-inline-block m-0 p-0"
+              />{" "}
+              
+                </div>
+                <div class="col-8">
+                <strong>OCULAR</strong>
+                </div>
+              </div>
+             
+            </Navbar.Brand>
+          </Link>
+          </div>
+            <div class="col-6">
+          <SearchForm />
+          </div>
+          <div class="col-3">
+          <Nav className="d-flex">
+            {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" /> */}
+            {/* <Navbar.Collapse
+              className="justify-content-end"
+              id="responsive-navbar-nav"
+            > */}
+            {/* MENU LINKS */}
+            {!state.currentUser && (
+              <>
+                {Feed}
+                <LoginModal />
+                <SignupModal />
+              </>
+            )}
+            {state.currentUser && (
+              <>
+                {/* <CreatePost /> */}
+                <NavDropdown
+                  align="end"
+                  title={UserAvatar}
+                  id="basic-nav-dropdown"
+                  style={{ border: "none" }}
+                >
+                  <NavDropdown.Item onClick={() => navigate("/profile")}>
+                    My Profile
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => navigate("/feed")}>
+                    Feed
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <CreatePost />
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
+                </NavDropdown>
+              </>
+            )}
+            {/* </Navbar.Collapse> */}
+          </Nav>
+          </div>
+          </div>
+        </Container>
+
 
               {/* Ternary if user exists to display buttons or not */}
               {state.currentUser ? (

@@ -1,5 +1,9 @@
 #basic-nav-dropdown {
-    min-width: 5rem;
     border: none;
     padding: 0px;
 }
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+  }

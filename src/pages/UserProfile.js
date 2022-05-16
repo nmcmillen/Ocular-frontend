@@ -18,10 +18,8 @@ import {
 } from "../Data";
 import "./UserProfile.css";
 import request from "../components/services/api.request";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
-// import { faCoffee } from '@fortawesome/free-regular-svg-icons'
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
 export default function UserProfile() {
@@ -100,8 +98,10 @@ export default function UserProfile() {
     }).then((resp) => {
       console.log(resp);
     });
-    window.location.reload(false);
-    // this.forceUpdate()
+    // window.location.reload(false);
+    getFollowerData().then((data) => {
+      setFollow(data);
+    });
   };
 
   // ### UNFOLLOW ###
@@ -112,8 +112,10 @@ export default function UserProfile() {
     }).then((resp) => {
       console.log(resp);
     });
-    window.location.reload(false);
-    // this.forceUpdate()
+    // window.location.reload(false);
+    getFollowerData().then((data) => {
+      setFollow(data);
+    });
   };
 
   // ### LIKE A POST ###
@@ -131,8 +133,6 @@ export default function UserProfile() {
     getReactionData().then((data) => {
       setReactions(data);
     });
-    // window.location.reload(false);
-    // this.forceUpdate()
   };
 
   // look up optional chaining
@@ -202,7 +202,7 @@ export default function UserProfile() {
       <div>
         {/* <Row xs={1} md={2} className="g-4"> */}
         {userPosts.map((post) => (
-          <Card key={post.id} className="mx-auto mt-4" id="post">
+          <Card key={post.id} className="mx-auto my-2" id="post">
             <Row className="p-0 m-2 post-header">
               <Col className="p-0" xs={7}>
                 <Image

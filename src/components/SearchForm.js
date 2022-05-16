@@ -36,7 +36,7 @@ export default function SearchForm() {
             minLength="1"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search for people or photos"
+            placeholder="Search for people"
           />
           {/* <button>
             <svg
