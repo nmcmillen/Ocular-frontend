@@ -79,9 +79,9 @@ export default function MyProfile() {
         <Container key={user.id} fluid className="profile-page text-center mt-3">
           <Image className="profile-avatar" roundedCircle src={user.avatar} />
           <Row>
-            <h3>
+            <h4>
               {user.first_name} {user.last_name}
-            </h3>
+            </h4>
           </Row>
           <Row>
             <h6>{user.bio}</h6>
@@ -116,7 +116,7 @@ export default function MyProfile() {
       <div>
         {/* <Row xs={1} md={2} className="g-4"> */}
         {userPosts.map((post) => (
-          <Card key={post.id} className="mx-auto mt-4" id="post">
+          <Card key={post.id} className="mx-auto my-2" id="post">
             <Row className="p-0 m-2 post-header">
               <Col className="p-0" xs={7}>
                 <Image
@@ -151,7 +151,7 @@ export default function MyProfile() {
                     title=""
                   >
                     <Dropdown.Item onClick={() => handleDeletePost(post.id)}>
-                      Delete Post {post.id}
+                      Delete Post
                     </Dropdown.Item>
                   </DropdownButton>
                 </Col>

@@ -108,7 +108,7 @@ export default function PostLayout() {
     <>
       <div>
         {showPosts.map((post) => (
-          <Card key={post.id} className="mx-auto mt-4" id="post">
+          <Card key={post.id} className="mx-auto my-2" id="post">
             <Row className="p-0 m-2 post-header">
               <Col className="p-0" xs={7}>
                 <Image

@@ -202,7 +202,7 @@ export default function UserProfile() {
       <div>
         {/* <Row xs={1} md={2} className="g-4"> */}
         {userPosts.map((post) => (
-          <Card key={post.id} className="mx-auto mt-4" id="post">
+          <Card key={post.id} className="mx-auto my-2" id="post">
             <Row className="p-0 m-2 post-header">
               <Col className="p-0" xs={7}>
                 <Image
