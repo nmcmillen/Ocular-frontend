@@ -3,18 +3,31 @@ import { Link } from "react-router-dom";
 import { useGlobalState } from "../context/GlobalState";
 import "./PostLayout.css";
 import { Card, Col, Image, Row } from "react-bootstrap";
-import { getPostData, getReactionData } from "../Data";
+import { getPostData, getReactionData, getFollowerData } from "../Data";
 import request from "../components/services/api.request";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
-// import { faCoffee } from '@fortawesome/free-regular-svg-icons'
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
 export default function PostLayout() {
   const [state, dispatch] = useGlobalState();
   const [posts, setPosts] = useState([]);
   const [reactions, setReactions] = useState([]);
+
+  const [follow, setFollow] = useState([]);
+  // const [followingPosts, setFollowingPosts] = useState([]);
+
+  useEffect(() => {
+    getFollowerData().then((data) => {
+      setFollow(
+        data.filter(
+          (displayFollowing) =>
+            displayFollowing.user === state.currentUser.user_id
+        )
+      );
+    });
+  }, []);
 
   useEffect(() => {
     getPostData().then((data) => {
@@ -29,6 +42,32 @@ export default function PostLayout() {
     });
   }, []);
 
+  // ### Filters to find current signed in user's following users and their ID
+  let followingUsers = follow.map((fans) => fans.follower);
+
+  // ### Filters existing posts to return only the posts that the current signed in user follows
+  let followingPosts = posts.filter((posts) =>
+    followingUsers.includes(posts.created_by.id)
+  );
+
+  console.log("fposts", followingPosts);
+
+  // ### If a user is signed in, set Feed to show posts from followed users. If not, show all posts.
+  var showPosts;
+  if (state.currentUser) {
+    showPosts = followingPosts;
+  } else {
+    showPosts = posts;
+  }
+
+  // ### Not sure why this won't filter the specific followed user posts.
+  // useEffect(() => {
+  //   getPostData().then((data) => {
+  //     setFollowingPosts(data.filter(
+  //       (posts) => followOnly.includes(posts.created_by.id)));
+  //   });
+  // }, []);
+
   // need something like this to update state when things are clicked
   // const handleChange = (key, value) => {
   //   setUser({
@@ -36,20 +75,6 @@ export default function PostLayout() {
   //     [key]: value,
   //   });
   // };
-
-  // check if signed in user has already liked the post (pulling correctly if user signed in)
-  // let reactionID = reactions.filter(
-  //   (reaction) =>
-  //     reaction.user === state.currentUser?.user_id);
-
-  // let reactionID = reactions.find(
-  //   (reaction) =>
-  //     reaction.user === state.currentUser?.user_id && reaction.post === post.id
-  // );
-
-  // console.log('reactionsmaybe', reactionID)
-  // let reactionID = reactions.find((reaction) => reaction.user === state.currentUser?.user_id &&
-  //     reaction.follower === userID[0])
 
   let handleLike = async (postID) => {
     const newLike = new FormData();
@@ -82,7 +107,7 @@ export default function PostLayout() {
   return (
     <>
       <div>
-        {posts.map((post) => (
+        {showPosts.map((post) => (
           <Card key={post.id} className="mx-auto mt-4" id="post">
             <Row className="p-0 m-2 post-header">
               <Col className="p-0" xs={7}>

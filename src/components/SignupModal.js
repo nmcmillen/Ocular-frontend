@@ -2,16 +2,18 @@ import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import AuthService from "././services/auth.service";
 import { useNavigate } from "react-router-dom";
+import { useGlobalState } from ".././context/GlobalState";
+import jwtDecode from "jwt-decode";
+import request from "./services/api.request";
 
 export default function SignupModal() {
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [state, dispatch] = useGlobalState();
 
   let navigate = useNavigate();
 
-  // Josh example below
   const [user, setUser] = useState({
     username: "",
     password: "",
@@ -29,15 +31,44 @@ export default function SignupModal() {
   };
 
   // look at defensive programming here
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    AuthService.register(user);
-    // navigate('/profile') look to make this work and direct to users profile on succesful account creation
+    await AuthService.register(user);
+    localStorage.clear();
+
+    // Handles immediate login on account creation
+    // Copied from LoginModal
+    await AuthService.login(user.username, user.password).then(async (resp) => {
+      let data = await jwtDecode(resp.access);
+      let person = await getPerson(data.user_id);
+
+      await dispatch({
+        currentUserToken: resp.access,
+        currentUser: data,
+        person,
+      });
+      // set person to local storage so it saves there
+      localStorage.setItem("person", JSON.stringify(person));
+    });
+    handleClose();
+    navigate("/profile"); //need to navigate to profile but having issue with signup
+  };
+
+  // Gets signed in user's data. Copied from LoginModal.
+  const getPerson = async (user) => {
+    console.log("getperson function");
+    let options = {
+      url: `/api/users/${user}`,
+      method: "GET",
+    };
+    let resp = await request(options);
+    console.log(resp);
+    return resp.data;
   };
 
   return (
     <>
-      <Button className="text-white" variant="" onClick={handleShow}>
+      <Button className="text-white" style={{ padding: '5px'}} variant="" onClick={handleShow}>
         Signup
       </Button>
 
@@ -125,14 +156,16 @@ export default function SignupModal() {
             value="Register"
             variant="primary"
             onClick={handleRegister}
-            disabled={(
+            disabled={
               user.password &&
               user.password.length >= 8 &&
               user.password === user.passwordConf &&
               user.firstName &&
               user.lastName &&
               user.email
-            ) ? false : true}
+                ? false
+                : true
+            }
           >
             Sign Up
           </Button>

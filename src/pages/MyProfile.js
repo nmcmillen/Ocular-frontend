@@ -24,11 +24,11 @@ export default function MyProfile() {
 
   useEffect(() => {
     getUserData().then((data) => {
-      setProfile(data);
+      // setProfile(data);
+      setProfile(data.filter((user) => user.id === state.currentUser.user_id)); //might use this instead
     });
     getFollowerData().then((data) => {
       setFollow(data);
-      // setFollowers(data.filter((user) => user.id === user.id));
     });
   }, []);
 
@@ -42,6 +42,9 @@ export default function MyProfile() {
   let userProfile = profile.filter(
     (displayProfile) => displayProfile.id === state.currentUser.user_id
   );
+
+  // unsure how/if to use this in place of above 'userProfile'
+  // let userProfile = state.currentUser.user_id
 
   // ### Displays the current page user's posts ###
   let userPosts = posts.filter(
@@ -99,8 +102,6 @@ export default function MyProfile() {
           </Row>
           <Row className="m-0 mt-1">
             <Col>
-              {/* <Button>Edit Profile</Button> */}
-              {/* <Button>Edit Avatar</Button> */}
               <EditProfile />
               <EditAvatar />
             </Col>

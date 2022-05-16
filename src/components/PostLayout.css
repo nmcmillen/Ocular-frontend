@@ -27,10 +27,12 @@ img {
     background: none;
     border: none;
     color: red;
+    padding-left: 0px;
 }
 
 .like-button {
     background: none;
     border: none;
     color: black;
+    padding-left: 0px;
 }

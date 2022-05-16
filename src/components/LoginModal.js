@@ -4,7 +4,6 @@ import AuthService from "././services/auth.service";
 import { useNavigate } from "react-router-dom";
 import { useGlobalState } from ".././context/GlobalState";
 import jwtDecode from "jwt-decode";
-// new to get user data
 import request from "./services/api.request"; 
 
 export default function LoginModal() {
@@ -36,7 +35,8 @@ export default function LoginModal() {
       });
       // set person to local storage so it saves there
       localStorage.setItem('person',JSON.stringify(person))
-      navigate("/feed");
+      // navigate("/profile");
+      window.location.reload(true)
     });
   };
 
@@ -54,7 +54,7 @@ export default function LoginModal() {
 
   return (
     <>
-      <Button className="text-white" variant="" onClick={handleShow}>
+      <Button className="text-white" style={{ padding: '5px'}} variant="" onClick={handleShow}>
         Login
       </Button>
 
@@ -69,7 +69,6 @@ export default function LoginModal() {
               <Form.Control
                 type="text"
                 placeholder="user.ocular"
-                // id="username"
                 name="username"
                 onChange={(e) => setUsername(e.target.value)}
                 // onSubmit={handleLogin}
@@ -81,7 +80,6 @@ export default function LoginModal() {
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
-                // id="pass"
                 name="password"
                 minLength="8"
                 onChange={(e) => setPassword(e.target.value)}
