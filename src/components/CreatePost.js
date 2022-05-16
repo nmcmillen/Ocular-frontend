@@ -49,6 +49,7 @@ export default function CreatePost() {
         className="text-white shadow-none"
         variant=""
         onClick={handleShow}
+        style={{padding: '5px'}}
       >
         Create Post
       </Button>

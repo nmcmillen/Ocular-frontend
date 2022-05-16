@@ -51,12 +51,12 @@ export default function HomeNavbar() {
           </Link>
           <SearchForm />
           <Nav className="d-flex">
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse className="justify-content-end" id="responsive-navbar-nav">
               {/* MENU LINKS */}
               <Link
                 to="/feed"
-                style={{ color: "white", textDecoration: "none" }}
+                style={{ color: "white", textDecoration: "none", padding: '5px' }}
               >
                 Feed
               </Link>
