@@ -1,5 +1,12 @@
 import React from "react";
-import { Container, Image, Navbar, NavDropdown, Nav } from "react-bootstrap";
+import {
+  Button,
+  Container,
+  Image,
+  Navbar,
+  NavDropdown,
+  Nav,
+} from "react-bootstrap";
 import CreatePost from "./CreatePost";
 import logo from "./images/ocular-logo.png";
 import LoginModal from "./LoginModal";
@@ -9,7 +16,6 @@ import { Link } from "react-router-dom";
 import { useGlobalState } from "../context/GlobalState";
 import { useNavigate } from "react-router-dom";
 import "./HomeNavbar.css";
-// Maybe need a Link Container bootstrap???
 
 export default function HomeNavbar() {
   const [state, dispatch] = useGlobalState();
@@ -20,8 +26,8 @@ export default function HomeNavbar() {
 
   function logout() {
     localStorage.clear();
-    navigate('/')
-    window.location.reload(true)
+    navigate("/");
+    window.location.reload(true);
   }
 
   const UserAvatar = (
@@ -29,9 +35,9 @@ export default function HomeNavbar() {
       src={state.person?.avatar}
       alt="User profile image"
       roundedCircle
-      style={{ width: '30px' }}
+      style={{ width: "30px" }}
     />
-  )
+  );
 
   return (
     <div>
@@ -51,15 +57,20 @@ export default function HomeNavbar() {
           </Link>
           <SearchForm />
           <Nav className="d-flex">
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-            <Navbar.Collapse className="justify-content-end" id="responsive-navbar-nav">
+            {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" /> */}
+            {/* <Navbar.Collapse
+              className="justify-content-end"
+              id="responsive-navbar-nav"
+            > */}
               {/* MENU LINKS */}
-              <Link
-                to="/feed"
-                style={{ color: "white", textDecoration: "none", padding: '5px' }}
+              <Button
+                className="text-white"
+                style={{ padding: "5px" }}
+                variant=""
+                onClick={() => navigate("/feed")}
               >
                 Feed
-              </Link>
+              </Button>
               {!state.currentUser && (
                 <>
                   <LoginModal />
@@ -69,17 +80,20 @@ export default function HomeNavbar() {
               {state.currentUser && (
                 <>
                   <CreatePost />
-                  <NavDropdown align='end' title={UserAvatar} id="basic-nav-dropdown" style={{ border: 'none' }}>
+                  <NavDropdown
+                    align="end"
+                    title={UserAvatar}
+                    id="basic-nav-dropdown"
+                    style={{ border: "none" }}
+                  >
                     <NavDropdown.Item onClick={() => navigate("/profile")}>
                       My Profile
                     </NavDropdown.Item>
-                    <NavDropdown.Item onClick={logout}>
-                      Logout
-                    </NavDropdown.Item>
+                    <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
                   </NavDropdown>
                 </>
               )}
-            </Navbar.Collapse>
+            {/* </Navbar.Collapse> */}
           </Nav>
         </Container>
       </Navbar>
