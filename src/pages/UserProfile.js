@@ -98,7 +98,10 @@ export default function UserProfile() {
     }).then((resp) => {
       console.log(resp);
     });
-    window.location.reload(false);
+    // window.location.reload(false);
+    getFollowerData().then((data) => {
+      setFollow(data);
+    });
   };
 
   // ### UNFOLLOW ###
@@ -109,7 +112,10 @@ export default function UserProfile() {
     }).then((resp) => {
       console.log(resp);
     });
-    window.location.reload(false);
+    // window.location.reload(false);
+    getFollowerData().then((data) => {
+      setFollow(data);
+    });
   };
 
   // ### LIKE A POST ###

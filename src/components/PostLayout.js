@@ -96,7 +96,7 @@ export default function PostLayout() {
   // ### UNFOLLOW ###
   // let handleUnlike = async () => {
   //   let resp = await request({
-  //     url: `api/followers/${relationshipID}/`,
+  //     url: `api/postreactions/${relationshipID}/`,
   //     method: "DELETE",
   //   }).then((resp) => {
   //     console.log(resp);
