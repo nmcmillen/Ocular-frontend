@@ -68,7 +68,7 @@ export default function SignupModal() {
 
   return (
     <>
-      <Button className="text-white" variant="" onClick={handleShow}>
+      <Button className="text-white" style={{ padding: '5px'}} variant="" onClick={handleShow}>
         Signup
       </Button>
 
