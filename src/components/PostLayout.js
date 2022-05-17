@@ -2,7 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGlobalState } from "../context/GlobalState";
 import "./PostLayout.css";
-import { Button, ButtonGroup, Card, Col, Image, Row, ToggleButton } from "react-bootstrap";
+import {
+  Button,
+  ButtonGroup,
+  Card,
+  Col,
+  Image,
+  Row,
+  ToggleButton,
+} from "react-bootstrap";
 import { getPostData, getReactionData, getFollowerData } from "../Data";
 import request from "../components/services/api.request";
 
@@ -18,11 +26,11 @@ export default function PostLayout() {
   const [follow, setFollow] = useState([]);
   // const [followingPosts, setFollowingPosts] = useState([]);
 
-  const [radioValue, setRadioValue] = useState('1');
+  const [radioValue, setRadioValue] = useState("1");
 
   const radios = [
-    { name: 'All Posts', value: '1' },
-    { name: 'Following', value: '2' },
+    { name: "All Posts", value: "1" },
+    { name: "Following", value: "2" },
   ];
 
   useEffect(() => {
@@ -61,13 +69,13 @@ export default function PostLayout() {
 
   // ### If a user is signed in, set Feed to show posts from followed users. If not, show all posts.
   var showPosts;
-  if (radioValue === '1') {
+  if (radioValue === "1") {
     showPosts = posts;
   } else {
     showPosts = followingPosts;
   }
 
-  console.log('showpost', showPosts)
+  console.log("showpost", showPosts);
 
   // ### Not sure why this won't filter the specific followed user posts.
   // useEffect(() => {
@@ -107,30 +115,29 @@ export default function PostLayout() {
 
   // const [checked, setChecked] = useState(false);
 
-
-  console.log(radioValue)
+  console.log(radioValue);
 
   return (
     <>
       {state.currentUser && (
         <div className="radio-buttons">
-        <ButtonGroup>
-          {radios.map((radio, idx) => (
-            <ToggleButton
-              key={idx}
-              id={`radio-${idx}`}
-              type="radio"
-              size="sm"
-              variant={idx % 2 ? "outline-dark" : "outline-dark"}
-              name="radio"
-              value={radio.value}
-              checked={radioValue === radio.value}
-              onChange={(e) => setRadioValue(e.currentTarget.value)}
-            >
-              {radio.name}
-            </ToggleButton>
-          ))}
-        </ButtonGroup>
+          <ButtonGroup>
+            {radios.map((radio, idx) => (
+              <ToggleButton
+                key={idx}
+                id={`radio-${idx}`}
+                type="radio"
+                size="sm"
+                variant={idx % 2 ? "outline-dark" : "outline-dark"}
+                name="radio"
+                value={radio.value}
+                checked={radioValue === radio.value}
+                onChange={(e) => setRadioValue(e.currentTarget.value)}
+              >
+                {radio.name}
+              </ToggleButton>
+            ))}
+          </ButtonGroup>
         </div>
       )}
 
@@ -158,7 +165,11 @@ export default function PostLayout() {
                 <Card.Text>{post.created_date}</Card.Text>
               </Col>
             </Row>
-            <Card.Img variant="top" src={post.photos[0].images} />
+            <Card.Img
+              variant="top"
+              src={post.photos[0].images}
+              onDoubleClick={() => handleLike(post.id)}
+            />
             <Card.Body className="p-0 m-2">
               <Card.Text className="m-0">
                 {/* if like relationship exist or not, display correct button */}

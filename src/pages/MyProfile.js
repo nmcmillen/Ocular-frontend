@@ -166,7 +166,11 @@ export default function MyProfile() {
                 <Card.Text>{post.created_date}</Card.Text>
               </Col>
             </Row>
-            <Card.Img variant="top" src={post.photos[0].images} />
+            <Card.Img
+              variant="top"
+              src={post.photos[0].images}
+              onDoubleClick={() => handleLike(post.id)}
+            />
             <Card.Body className="p-0 m-2">
               <Row className="align-items-center">
                 <Col>
@@ -210,12 +214,12 @@ export default function MyProfile() {
                     className="delete-button"
                     // id="dropdown-button-drop"
                     size="sm"
-                    drop='up'
+                    drop="up"
                     variant=""
-                    title={<FontAwesomeIcon icon={faEllipsis}/>}
+                    title={<FontAwesomeIcon icon={faEllipsis} />}
                   >
                     <Dropdown.Item onClick={() => handleDeletePost(post.id)}>
-                    Delete Post
+                      Delete Post
                     </Dropdown.Item>
                   </DropdownButton>
                 </Col>
