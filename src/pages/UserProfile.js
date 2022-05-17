@@ -2,14 +2,7 @@ import React, { useEffect, useState } from "react";
 import HomeNavbar from "../components/HomeNavbar";
 import { useGlobalState } from "../context/GlobalState";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  Button,
-  Card,
-  Col,
-  Container,
-  Image,
-  Row,
-} from "react-bootstrap";
+import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
 import {
   getFollowerData,
   getPostData,
@@ -179,11 +172,25 @@ export default function UserProfile() {
                     navigate("/profile")}
                   {relationshipID ? (
                     <div className="d-grid gap-2">
-                    <Button className='mt-1' variant='outline-secondary' size='sm' onClick={handleUnfollow}>Unfollow</Button>
+                      <Button
+                        className="mt-1"
+                        variant="outline-secondary"
+                        size="sm"
+                        onClick={handleUnfollow}
+                      >
+                        Unfollow
+                      </Button>
                     </div>
                   ) : (
                     <div className="d-grid gap-2">
-                    <Button className='mt-1' variant='outline-success' size='sm' onClick={handleFollow}>Follow</Button>
+                      <Button
+                        className="mt-1"
+                        variant="outline-success"
+                        size="sm"
+                        onClick={handleFollow}
+                      >
+                        Follow
+                      </Button>
                     </div>
                   )}
                 </Col>
@@ -219,7 +226,11 @@ export default function UserProfile() {
                 <Card.Text>{post.created_date}</Card.Text>
               </Col>
             </Row>
-            <Card.Img variant="top" src={post.photos[0].images} />
+            <Card.Img
+              variant="top"
+              src={post.photos[0].images}
+              onDoubleClick={() => handleLike(post.id)}
+            />
             <Card.Body className="p-0 m-2">
               <Row className="align-items-center">
                 <Col>
