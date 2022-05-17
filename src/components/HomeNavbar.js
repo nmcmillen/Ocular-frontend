@@ -5,9 +5,7 @@ import {
   Col,
   Image,
   Navbar,
-  NavDropdown,
   Nav,
-  Row,
 } from "react-bootstrap";
 import logo from "./images/ocular-logo.png";
 import LoginModal from "./LoginModal";
@@ -38,8 +36,9 @@ export default function HomeNavbar() {
     <Image
       src={state.person?.avatar}
       alt="User profile image"
+      className="nav-icon nav-avatar"
       roundedCircle
-      style={{ width: "30px" }}
+      style={{ width: "30px", height: "30px" }}
     />
   );
 
@@ -63,6 +62,7 @@ export default function HomeNavbar() {
               <img
                 alt=""
                 src={logo}
+                style={{ marginRight: "5px" }}
                 width="30"
                 height="30"
                 className="d-inline-block"
@@ -76,11 +76,6 @@ export default function HomeNavbar() {
         </Col>
         <Col className=" mx-auto">
           <Nav className="d-flex">
-            {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" /> */}
-            {/* <Navbar.Collapse
-              className="justify-content-end"
-              id="responsive-navbar-nav"
-            > */}
             {/* MENU LINKS */}
             {!state.currentUser && (
               <Col className="d-flex justify-content-center">
@@ -93,47 +88,35 @@ export default function HomeNavbar() {
               <Col className="d-flex justify-content-center">
                 <CreatePost />
                 <Button
-                  className="text-white shadow-none m-0 p-0"
+                  className="text-white shadow-none mx-2 p-0"
                   variant=""
+                  title="View Feed"
                   onClick={() => navigate("/feed")}
                 >
                   <FontAwesomeIcon
-                    style={{ marginRight: "1rem" }}
+                    className="nav-icon"
                     icon={faList}
                   />
                 </Button>
                 <Button
-                  className="text-white shadow-none m-0 p-0"
+                  className="text-white shadow-none mx-2 p-0"
                   variant=""
+                  title="Logout"
                   onClick={logout}
                 >
                   <FontAwesomeIcon
-                    style={{ marginRight: "1rem" }}
+                    className="nav-icon"
                     icon={faRightFromBracket}
                   />
                 </Button>
                 <Button
-                  className="shadow-none m-0 p-0"
+                  className="shadow-none mx-2 p-0"
                   variant=""
+                  title="My Profile"
                   onClick={() => navigate("/profile")}
                 >
                   {UserAvatar}
                 </Button>
-
-                {/* <NavDropdown
-                  align="end"
-                  title={UserAvatar}
-                  id="basic-nav-dropdown"
-                  style={{ border: "none" }}
-                >
-                  <NavDropdown.Item onClick={() => navigate("/profile")}>
-                    My Profile
-                  </NavDropdown.Item>
-                  <NavDropdown.Item onClick={() => navigate("/feed")}>
-                    Feed
-                  </NavDropdown.Item>
-                  <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
-                </NavDropdown> */}
               </Col>
             )}
             {/* </Navbar.Collapse> */}

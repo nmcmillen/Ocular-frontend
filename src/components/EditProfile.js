@@ -12,14 +12,13 @@ export default function EditProfile() {
   const handleShow = () => setShow(true);
 
   const [updateProfile, setUpdateProfile] = useState({
-    first_name: state.person.first_name,
-    last_name: state.person.last_name,
-    username: state.person.username,
-    bio: state.person.bio,
+    first_name: profile.first_name,
+    last_name: profile.last_name,
+    username: profile.username,
+    bio: profile.bio,
   });
-
   
-  let userProfile = profile;
+  // let userProfile = profile;
   
   useEffect(() => {
     getUserData().then((data) => {
@@ -63,7 +62,7 @@ export default function EditProfile() {
       >
         Update Profile
       </Button>
-      {userProfile.map((user) => (
+      {profile.map((user) => (
         <Modal centered key={user.id} show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Edit Profile</Modal.Title>
