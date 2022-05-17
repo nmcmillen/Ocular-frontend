@@ -4,7 +4,7 @@ import AuthService from "././services/auth.service";
 import { useNavigate } from "react-router-dom";
 import { useGlobalState } from ".././context/GlobalState";
 import jwtDecode from "jwt-decode";
-import request from "./services/api.request"; 
+import request from "./services/api.request";
 
 export default function LoginModal() {
   const [show, setShow] = useState(false);
@@ -14,47 +14,51 @@ export default function LoginModal() {
 
   const [state, dispatch] = useGlobalState();
   // const [person, setPerson] = useGlobalState();
-  
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  
+
   let navigate = useNavigate();
-  
+
   const handleLogin = (e) => {
     e.preventDefault();
 
-    AuthService.login(username, password)
-      .then(async (resp) => {
+    AuthService.login(username, password).then(async (resp) => {
       let data = await jwtDecode(resp.access);
       let person = await getPerson(data.user_id);
 
       await dispatch({
         currentUserToken: resp.access,
         currentUser: data,
-        person
+        person,
       });
       // set person to local storage so it saves there
-      localStorage.setItem('person',JSON.stringify(person))
+      localStorage.setItem("person", JSON.stringify(person));
       // navigate("/profile");
-      window.location.reload(true)
+      window.location.reload(true);
     });
   };
 
   // new to get user data
   const getPerson = async (user) => {
-    console.log('getperson function')
+    console.log("getperson function");
     let options = {
-      url:`/api/users/${user}`,
-      method: 'GET',
-    }
-    let resp = await request(options)
-    console.log(resp)
-    return resp.data
-  }
+      url: `/api/users/${user}`,
+      method: "GET",
+    };
+    let resp = await request(options);
+    console.log(resp);
+    return resp.data;
+  };
 
   return (
     <>
-      <Button className="text-white" style={{ padding: '5px'}} variant="" onClick={handleShow}>
+      <Button
+        className="text-white"
+        style={{ padding: "5px" }}
+        variant=""
+        onClick={handleShow}
+      >
         Login
       </Button>
 
@@ -62,8 +66,8 @@ export default function LoginModal() {
         <Modal.Header closeButton>
           <Modal.Title>Login to Ocular</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <Form>
+        <Form>
+          <Modal.Body>
             <Form.Group className="mb-3" controlId="username">
               <Form.Label>Username</Form.Label>
               <Form.Control
@@ -71,7 +75,6 @@ export default function LoginModal() {
                 placeholder="user.ocular"
                 name="username"
                 onChange={(e) => setUsername(e.target.value)}
-                // onSubmit={handleLogin}
                 required
                 autoFocus
               />
@@ -83,23 +86,21 @@ export default function LoginModal() {
                 name="password"
                 minLength="8"
                 onChange={(e) => setPassword(e.target.value)}
-                // onSubmit={handleLogin}
                 required
                 autoFocus
               />
             </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button type="submit" variant="primary" onClick={handleLogin}>
-            {" "}
-            {/*{[handleClose, handleLogin]}*/}
-            Sign In
-          </Button>
-        </Modal.Footer>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button type="submit" variant="primary" onClick={handleLogin}>
+              {" "}
+              Sign In
+            </Button>
+          </Modal.Footer>
+        </Form>
       </Modal>
     </>
   );

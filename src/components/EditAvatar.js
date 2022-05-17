@@ -10,7 +10,7 @@ export default function EditAvatar() {
 
   const [state, dispatch] = useGlobalState();
   const [avatar, setAvatar] = useState({
-    avatar: "null",
+    avatar: null,
   });
 
   // able to check 'avatar' state in the console. working when adding avatar info 5/4 at 9pm
@@ -70,7 +70,10 @@ export default function EditAvatar() {
           <Button variant="" onClick={handleClose}>
             Cancel
           </Button>
-          <Button type="submit" variant="primary" onClick={handleUpdateAvatar}>
+          <Button type="submit" variant="primary" onClick={handleUpdateAvatar}
+          disabled={
+            avatar.avatar === null
+          }>
             Update Avatar
           </Button>
         </Modal.Footer>

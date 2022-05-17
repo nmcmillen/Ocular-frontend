@@ -68,7 +68,12 @@ export default function SignupModal() {
 
   return (
     <>
-      <Button className="text-white" style={{ padding: '5px'}} variant="" onClick={handleShow}>
+      <Button
+        className="text-white"
+        style={{ padding: "5px" }}
+        variant=""
+        onClick={handleShow}
+      >
         Signup
       </Button>
 
@@ -76,8 +81,8 @@ export default function SignupModal() {
         <Modal.Header closeButton>
           <Modal.Title>Create an Account</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <Form>
+        <Form>
+          <Modal.Body>
             <Form.Group className="mb-3" controlId="email">
               <Form.Label>Email</Form.Label>
               <Form.Control
@@ -133,6 +138,9 @@ export default function SignupModal() {
                 required
                 autoFocus
               />
+              <Form.Text className="text-muted">
+                Enter a password that is at least 8 characters or more.
+              </Form.Text>
             </Form.Group>
             <Form.Group className="mb-3" controlId="passConf">
               <Form.Label>Confirm Password</Form.Label>
@@ -145,31 +153,31 @@ export default function SignupModal() {
                 autoFocus
               />
             </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button
-            type="submit"
-            value="Register"
-            variant="primary"
-            onClick={handleRegister}
-            disabled={
-              user.password &&
-              user.password.length >= 8 &&
-              user.password === user.passwordConf &&
-              user.firstName &&
-              user.lastName &&
-              user.email
-                ? false
-                : true
-            }
-          >
-            Sign Up
-          </Button>
-        </Modal.Footer>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              value="Register"
+              variant="primary"
+              onClick={handleRegister}
+              disabled={
+                user.password &&
+                user.password.length >= 8 &&
+                user.password === user.passwordConf &&
+                user.firstName &&
+                user.lastName &&
+                user.email
+                  ? false
+                  : true
+              }
+            >
+              Sign Up
+            </Button>
+          </Modal.Footer>
+        </Form>
       </Modal>
     </>
   );
