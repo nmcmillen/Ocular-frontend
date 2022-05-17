@@ -89,7 +89,13 @@ export default function CreatePost() {
           <Button variant="" onClick={handleClose}>
             Cancel
           </Button>
-          <Button type="submit" variant="primary" onClick={handleCreatePost}>
+          <Button 
+          type="submit" 
+          variant="primary" 
+          onClick={handleCreatePost}
+          disabled={
+            post.image === null
+          }>
             Create Post
           </Button>
         </Modal.Footer>
