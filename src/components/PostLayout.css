@@ -45,3 +45,12 @@ img {
 .unlike-button:hover {
     transform: scale(1.2);
 }
+
+.radio-buttons {
+    margin-top: .5rem;
+    text-align: center;
+}
+
+.btn:focus{
+  box-shadow: none!important;
+}

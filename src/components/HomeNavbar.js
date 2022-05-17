@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Container,
@@ -13,6 +13,7 @@ import SearchForm from "./SearchForm";
 import SignupModal from "./SignupModal";
 import { Link } from "react-router-dom";
 import { useGlobalState } from "../context/GlobalState";
+import { getUserData } from "../Data";
 import { useNavigate } from "react-router-dom";
 import "./HomeNavbar.css";
 import CreatePost from "./CreatePost";
@@ -21,8 +22,15 @@ import { faList, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 export default function HomeNavbar() {
   const [state, dispatch] = useGlobalState();
+  const [profile, setProfile] = useState([]);
   // let user = JSON.parse(localStorage.getItem("user"));
   // console.log(user);
+
+  useEffect(() => {
+    getUserData().then((data) => {
+      setProfile(data.find((user) => user.id === state.currentUser.user_id));
+    });
+  }, []);
 
   let navigate = useNavigate();
 
@@ -34,7 +42,7 @@ export default function HomeNavbar() {
 
   const UserAvatar = (
     <Image
-      src={state.person?.avatar}
+      src={profile?.avatar}
       alt="User profile image"
       className="nav-icon nav-avatar"
       roundedCircle
@@ -86,8 +94,7 @@ export default function HomeNavbar() {
             )}
             {state.currentUser && (
               <Col className="d-flex justify-content-center">
-                <CreatePost />
-                <Button
+                                <Button
                   className="text-white shadow-none mx-2 p-0"
                   variant=""
                   title="View Feed"
@@ -98,6 +105,7 @@ export default function HomeNavbar() {
                     icon={faList}
                   />
                 </Button>
+                <CreatePost />
                 <Button
                   className="text-white shadow-none mx-2 p-0"
                   variant=""

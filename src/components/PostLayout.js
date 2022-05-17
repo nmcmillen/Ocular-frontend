@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGlobalState } from "../context/GlobalState";
 import "./PostLayout.css";
-import { Card, Col, Image, Row } from "react-bootstrap";
+import { Button, ButtonGroup, Card, Col, Image, Row, ToggleButton } from "react-bootstrap";
 import { getPostData, getReactionData, getFollowerData } from "../Data";
 import request from "../components/services/api.request";
 
@@ -17,6 +17,13 @@ export default function PostLayout() {
 
   const [follow, setFollow] = useState([]);
   // const [followingPosts, setFollowingPosts] = useState([]);
+
+  const [radioValue, setRadioValue] = useState('1');
+
+  const radios = [
+    { name: 'All Posts', value: '1' },
+    { name: 'Following', value: '2' },
+  ];
 
   useEffect(() => {
     getFollowerData().then((data) => {
@@ -50,15 +57,17 @@ export default function PostLayout() {
     followingUsers.includes(posts.created_by.id)
   );
 
-  console.log("fposts", followingPosts);
+  // console.log("fposts", followingPosts);
 
   // ### If a user is signed in, set Feed to show posts from followed users. If not, show all posts.
   var showPosts;
-  if (state.currentUser) {
-    showPosts = followingPosts;
-  } else {
+  if (radioValue === '1') {
     showPosts = posts;
+  } else {
+    showPosts = followingPosts;
   }
+
+  console.log('showpost', showPosts)
 
   // ### Not sure why this won't filter the specific followed user posts.
   // useEffect(() => {
@@ -67,14 +76,6 @@ export default function PostLayout() {
   //       (posts) => followOnly.includes(posts.created_by.id)));
   //   });
   // }, []);
-
-  // need something like this to update state when things are clicked
-  // const handleChange = (key, value) => {
-  //   setUser({
-  //     ...user,
-  //     [key]: value,
-  //   });
-  // };
 
   let handleLike = async (postID) => {
     const newLike = new FormData();
@@ -104,8 +105,35 @@ export default function PostLayout() {
   //   window.location.reload(false);
   // };
 
+  // const [checked, setChecked] = useState(false);
+
+
+  console.log(radioValue)
+
   return (
     <>
+      {state.currentUser && (
+        <div className="radio-buttons">
+        <ButtonGroup>
+          {radios.map((radio, idx) => (
+            <ToggleButton
+              key={idx}
+              id={`radio-${idx}`}
+              type="radio"
+              size="sm"
+              variant={idx % 2 ? "outline-dark" : "outline-dark"}
+              name="radio"
+              value={radio.value}
+              checked={radioValue === radio.value}
+              onChange={(e) => setRadioValue(e.currentTarget.value)}
+            >
+              {radio.name}
+            </ToggleButton>
+          ))}
+        </ButtonGroup>
+        </div>
+      )}
+
       <div>
         {showPosts.map((post) => (
           <Card key={post.id} className="mx-auto my-2" id="post">
