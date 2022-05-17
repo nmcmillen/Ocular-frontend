@@ -5,7 +5,6 @@ import request from "./services/api.request";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 
-
 export default function CreatePost() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -49,12 +48,12 @@ export default function CreatePost() {
   return (
     <>
       <Button
-        className="text-white shadow-none m-0 p-0"
+        className="text-white shadow-none p-0 mx-2"
+        title="Create Post"
         variant=""
         onClick={handleShow}
-        
       >
-        <FontAwesomeIcon style={{marginRight: '1rem'}} icon={faCamera} />
+        <FontAwesomeIcon className="nav-icon" icon={faCamera} />
       </Button>
 
       <Modal centered show={show} onHide={handleClose}>
