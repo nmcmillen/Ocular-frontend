@@ -8,3 +8,18 @@
     width: 150px;
     object-fit: cover;
 }
+
+.dropdown-toggle::after {
+    display: none !important; 
+}
+
+.delete-button {
+    background-color: none;
+    border: none;
+    border-radius: 5px;
+}
+
+
+.delete-button:hover {
+    background-color: rgb(200, 200, 200);
+}

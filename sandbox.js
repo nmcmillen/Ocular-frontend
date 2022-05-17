@@ -1,4 +1,25 @@
-// Justin's Navbar
+<>
+<ButtonGroup>
+{radios.map((radio, idx) => (
+  <ToggleButton
+    key={idx}
+    id={`radio-${idx}`}
+    type="radio"
+    variant={idx % 2 ? 'outline-success' : 'outline-danger'}
+    name="radio"
+    value={radio.value}
+    checked={radioValue === radio.value}
+    onChange={(e) => setRadioValue(e.currentTarget.value)}
+  >
+    {radio.name}
+  </ToggleButton>
+))}
+</ButtonGroup>
+</>
+  
+  
+  // Justin's Navbar
+
 <Navbar bg="dark" variant="dark" expand="lg">
         <Container>
           <div class="row">

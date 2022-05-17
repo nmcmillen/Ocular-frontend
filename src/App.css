@@ -42,3 +42,8 @@ body, html {
     transform: rotate(360deg);
   }
 }
+
+/* Removes the bootstrap button outlines on click */
+.btn:focus{
+  box-shadow: none!important;
+}

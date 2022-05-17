@@ -1,28 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Container,
   Col,
   Image,
   Navbar,
-  NavDropdown,
   Nav,
-  Row,
 } from "react-bootstrap";
-import CreatePost from "./CreatePost";
 import logo from "./images/ocular-logo.png";
 import LoginModal from "./LoginModal";
 import SearchForm from "./SearchForm";
 import SignupModal from "./SignupModal";
 import { Link } from "react-router-dom";
 import { useGlobalState } from "../context/GlobalState";
+import { getUserData } from "../Data";
 import { useNavigate } from "react-router-dom";
 import "./HomeNavbar.css";
+import CreatePost from "./CreatePost";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faList, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 export default function HomeNavbar() {
   const [state, dispatch] = useGlobalState();
+  const [profile, setProfile] = useState([]);
   // let user = JSON.parse(localStorage.getItem("user"));
   // console.log(user);
+
+  useEffect(() => {
+    getUserData().then((data) => {
+      setProfile(data.find((user) => user.id === state.currentUser.user_id));
+    });
+  }, []);
 
   let navigate = useNavigate();
 
@@ -34,10 +42,11 @@ export default function HomeNavbar() {
 
   const UserAvatar = (
     <Image
-      src={state.person?.avatar}
+      src={profile?.avatar}
       alt="User profile image"
+      className="nav-icon nav-avatar"
       roundedCircle
-      style={{ width: "30px" }}
+      style={{ width: "30px", height: "30px" }}
     />
   );
 
@@ -61,6 +70,7 @@ export default function HomeNavbar() {
               <img
                 alt=""
                 src={logo}
+                style={{ marginRight: "5px" }}
                 width="30"
                 height="30"
                 className="d-inline-block"
@@ -74,11 +84,6 @@ export default function HomeNavbar() {
         </Col>
         <Col className=" mx-auto">
           <Nav className="d-flex">
-            {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" /> */}
-            {/* <Navbar.Collapse
-              className="justify-content-end"
-              id="responsive-navbar-nav"
-            > */}
             {/* MENU LINKS */}
             {!state.currentUser && (
               <Col className="d-flex justify-content-center">
@@ -89,24 +94,37 @@ export default function HomeNavbar() {
             )}
             {state.currentUser && (
               <Col className="d-flex justify-content-center">
-                {/* <CreatePost /> */}
-                <NavDropdown
-                  align="end"
-                  title={UserAvatar}
-                  id="basic-nav-dropdown"
-                  style={{ border: "none" }}
+                                <Button
+                  className="text-white shadow-none mx-2 p-0"
+                  variant=""
+                  title="View Feed"
+                  onClick={() => navigate("/feed")}
                 >
-                  <NavDropdown.Item onClick={() => navigate("/profile")}>
-                    My Profile
-                  </NavDropdown.Item>
-                  <NavDropdown.Item onClick={() => navigate("/feed")}>
-                    Feed
-                  </NavDropdown.Item>
-                  <NavDropdown.Item>
-                    <CreatePost />
-                  </NavDropdown.Item>
-                  <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
-                </NavDropdown>
+                  <FontAwesomeIcon
+                    className="nav-icon"
+                    icon={faList}
+                  />
+                </Button>
+                <CreatePost />
+                <Button
+                  className="text-white shadow-none mx-2 p-0"
+                  variant=""
+                  title="Logout"
+                  onClick={logout}
+                >
+                  <FontAwesomeIcon
+                    className="nav-icon"
+                    icon={faRightFromBracket}
+                  />
+                </Button>
+                <Button
+                  className="shadow-none mx-2 p-0"
+                  variant=""
+                  title="My Profile"
+                  onClick={() => navigate("/profile")}
+                >
+                  {UserAvatar}
+                </Button>
               </Col>
             )}
             {/* </Navbar.Collapse> */}

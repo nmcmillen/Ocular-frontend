@@ -21,7 +21,7 @@ import request from "../components/services/api.request";
 import EditAvatar from "../components/EditAvatar";
 import EditProfile from "../components/EditProfile";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsis, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
 export default function MyProfile() {
@@ -207,14 +207,15 @@ export default function MyProfile() {
                 </Col>
                 <Col className="d-flex justify-content-end">
                   <DropdownButton
-                    // className="shadow-none"
-                    id="dropdown-basic-button"
+                    className="delete-button"
+                    // id="dropdown-button-drop"
                     size="sm"
-                    variant="secondary"
-                    title=""
+                    drop='up'
+                    variant=""
+                    title={<FontAwesomeIcon icon={faEllipsis}/>}
                   >
                     <Dropdown.Item onClick={() => handleDeletePost(post.id)}>
-                      Delete Post
+                    Delete Post
                     </Dropdown.Item>
                   </DropdownButton>
                 </Col>

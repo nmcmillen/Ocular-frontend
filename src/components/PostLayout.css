@@ -6,7 +6,7 @@
 
 img {
     border-radius: 0 !important;
-    margin-right: 10px;
+    /* margin-right: 10px; */
 }
 
 .timestamp {
@@ -17,6 +17,7 @@ img {
     height: 30px;
     width: 30px;
     object-fit: cover;
+    margin-right: 10px;
 }
 
 .post-header {
@@ -35,4 +36,21 @@ img {
     border: none;
     color: black;
     padding-left: 0px;
+}
+
+.like-button:hover {
+    transform: scale(1.2);
+}
+
+.unlike-button:hover {
+    transform: scale(1.2);
+}
+
+.radio-buttons {
+    margin-top: .5rem;
+    text-align: center;
+}
+
+.btn:focus{
+  box-shadow: none!important;
 }

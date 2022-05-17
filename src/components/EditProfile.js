@@ -17,15 +17,16 @@ export default function EditProfile() {
     username: state.person.username,
     bio: state.person.bio,
   });
-
   
-  let userProfile = profile;
+  // let userProfile = profile;
   
   useEffect(() => {
     getUserData().then((data) => {
-      setProfile(data.filter((user) => user.id === state.currentUser.user_id));
+      setProfile(data.find((user) => user.id === state.currentUser.user_id));
     });
   }, []);
+
+  console.log(profile)
   
   
   // handles the updates to create post modal from the text form and image/file upload
@@ -63,18 +64,17 @@ export default function EditProfile() {
       >
         Update Profile
       </Button>
-      {userProfile.map((user) => (
-        <Modal centered key={user.id} show={show} onHide={handleClose}>
+        <Modal centered key={profile.id} show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Edit Profile</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
             <Form>
+          <Modal.Body>
               <Form.Group className="mb-3" controlId="first_name">
                 <Form.Label>First Name</Form.Label>
                 <Form.Control
                   type="text"
-                  defaultValue={user.first_name}
+                  defaultValue={profile.first_name}
                   maxLength="255"
                   onChange={(e) => handleChange("first_name", e.target.value)}
                   autoFocus
@@ -84,17 +84,17 @@ export default function EditProfile() {
                 <Form.Label>Last Name</Form.Label>
                 <Form.Control
                   type="text"
-                  defaultValue={user.last_name}
+                  defaultValue={profile.last_name}
                   maxLength="255"
                   onChange={(e) => handleChange("last_name", e.target.value)}
                   autoFocus
                 />
               </Form.Group>
-              <Form.Group className="mb-3" controlId="username">
+              <Form.Group className="mb-3" controlId="profilename">
                 <Form.Label>Username</Form.Label>
                 <Form.Control
                   type="text"
-                  defaultValue={user.username}
+                  defaultValue={profile.username}
                   maxLength="255"
                   onChange={(e) => handleChange("username", e.target.value)}
                   autoFocus
@@ -105,13 +105,12 @@ export default function EditProfile() {
                 <Form.Control
                   as="textarea"
                   rows={3}
-                  defaultValue={user.bio}
+                  defaultValue={profile.bio}
                   maxLength="255"
                   onChange={(e) => handleChange("bio", e.target.value)}
                   autoFocus
                 />
               </Form.Group>
-            </Form>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="" onClick={handleClose}>
@@ -121,12 +120,18 @@ export default function EditProfile() {
               type="submit"
               variant="primary"
               onClick={handleUpdateProfile}
-            >
+              disabled={
+                updateProfile.first_name === profile.first_name &&
+                updateProfile.last_name === profile.last_name &&
+                updateProfile.username === profile.username &&
+                updateProfile.bio === profile.bio
+              }
+              >
               Update Profile
             </Button>
           </Modal.Footer>
+              </Form>
         </Modal>
-      ))}
     </>
   );
 }
